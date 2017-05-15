@@ -8,6 +8,9 @@ panel_custom:
       image: /local/custom_ui/floorplan/floorplan.svg
       stylesheet: /local/custom_ui/floorplan/floorplan.css
 
+      # Config below is identical across state card usage and custom panel usage of the floorplan
+      # You can copy/paste between one and the other whenever you make any changes
+
       last_motion_entity: sensor.template_last_motion
       last_motion_class: last_motion
 
