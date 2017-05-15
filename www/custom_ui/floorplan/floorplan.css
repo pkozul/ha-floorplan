@@ -1,0 +1,71 @@
+/* SVG shapes */
+
+svg, svg * {
+  vector-effect: non-scaling-stroke !important;
+}
+
+/* Hover over */
+
+.entity:hover {
+  stroke: #03A9F4 !important;
+  stroke-width: 1px !important;
+  stroke-opacity: 1 !important;
+}
+
+/* Last motion entity */
+
+.last_motion {
+  stroke: #808080 !important;
+  stroke-width: 1px !important;
+  stroke-opacity: 1 !important;
+}
+
+/* Alarm Panel */
+
+.alarm_disarmed {
+  fill: #0000DD !important;
+}
+
+.alarm_armed {
+  fill: #FF0000 !important;
+}
+
+/* Camera */
+
+.camera_idle {
+  fill: #B9CEF7 !important;
+}
+
+/* Light */
+
+.light_off {
+  fill: #C3B7F4 !important;
+}
+
+.light_on {
+  fill: #F8D2B9 !important;
+}
+
+/* Doorbell */
+
+.doorbell_off {
+  fill: #C3B7F4 !important;
+}
+
+.doorbell_on {
+  fill: #F8D2B9 !important;
+}
+
+/* Temperature sensors */
+
+.temp_low {
+  fill: #0000FF !important;
+}
+
+.temp_medium {
+  fill: #000000 !important;
+}
+
+.temp_high {
+  fill: #FF0000 !important;
+}
