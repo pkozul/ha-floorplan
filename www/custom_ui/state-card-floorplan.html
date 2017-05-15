@@ -1,0 +1,24 @@
+<link rel="import" href="floorplan/ha-floorplan.html" async>
+
+<dom-module id="state-card-floorplan">
+
+  <template>
+    <ha-floorplan hass=[[hass]] config=[[stateObj.attributes]]></ha-floorplan>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'state-card-floorplan',
+
+    properties: {
+      hass: {
+        type: Object,
+      },
+      stateObj: {
+        type: Object,
+      },
+    },
+  });
+
+</script>
