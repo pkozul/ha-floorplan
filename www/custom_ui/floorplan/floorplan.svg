@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="119.000000pt"
+   height="100.000000pt"
+   viewBox="0 0 119.000000 100.000000"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg13"
+   sodipodi:docname="floorplan.svg"
+   inkscape:version="0.91 r13725">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs17" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     id="namedview15"
+     showgrid="false"
+     inkscape:zoom="5.12"
+     inkscape:cx="114.65702"
+     inkscape:cy="46.612791"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg13" />
+  <path
+     id="house"
+     style="display:inline;fill:#e0e0e0;fill-opacity:1;stroke-width:0.75"
+     d="m 103.35404,56.003898 h 3.23093 v 11.069915 h -3.23093 z m 1.05932,-2.436443 h 6.5678 v 3.389831 h -6.5678 z m 0.50423,11.451271 h 10 v 16 h -10 z M 79.917599,5.0187263 H 110.9536 V 41.292911 H 79.917599 Z M 47.917591,39.018726 H 110.95814 V 53.802107 H 47.917591 Z M 24.646404,52.878894 H 104.91759 V 96.018726 H 24.646404 Z M 4.9175909,39.018726 H 26.129455 V 96.099235 H 4.9175909 Z"
+     inkscape:connector-curvature="0"
+     inkscape:label="house" />
+  <path
+     style="fill:#c8c8c8;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 25.79383,53.596288 v 22.055633 h 22.695688 v 1.37191 H 64.380762 V 56.606427 H 49.244146 v -3.010139 z"
+     id="binary_sensor.kitchen"
+     inkscape:label="binary_sensor.kitchen"
+     inkscape:connector-curvature="0" />
+  <path
+     style="display:inline;fill:#c8c8c8;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 82.004521,66.004036 V 94.995479 H 103.92453 V 78.753419 H 99.103534 V 66.004036 Z"
+     id="binary_sensor.master_bedroom"
+     inkscape:connector-curvature="0"
+     inkscape:label="binary_sensor.master_bedroom" />
+  <path
+     style="display:inline;fill:#c8c8c8;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     inkscape:connector-curvature="0"
+     d="m 5.8813071,51 v 10.998532 h 9.6220879 9.622088 V 51 40.001468 H 15.503395 5.8813071 Z"
+     id="binary_sensor.theatre_room" />
+  <rect
+     style="display:inline;fill:#c8c8c8;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-opacity:1"
+     id="binary_sensor.back_hallway"
+     width="30.449038"
+     height="4.1197958"
+     x="19.288136"
+     y="78.090172"
+     inkscape:label="binary_sensor.back_hallway" />
+  <rect
+     style="display:inline;fill:#c8c8c8;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+     id="binary_sensor.front_hallway"
+     width="39.573128"
+     height="8"
+     x="65.426872"
+     y="57"
+     inkscape:label="binary_sensor.front_hallway" />
+  <rect
+     style="display:inline;fill:#c8c8c8;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-opacity:1"
+     id="switch.doorbell2"
+     width="2.2775424"
+     height="6.3559322"
+     x="110.92498"
+     y="43.266876"
+     inkscape:label="switch.doorbell2" />
+  <g
+     id="camera.driveway"
+     transform="matrix(0.00838829,0,0,0.00838829,111.00011,4.4672628)"
+     style="fill:#7d7d7d;fill-opacity:1"
+     inkscape:label="camera.driveway">
+    <g
+       id="g4149"
+       style="fill:#7d7d7d;fill-opacity:1">
+      <path
+         id="path4151"
+         d="m 488.3,142.5 0,203.1 c 0,15.7 -17,25.5 -30.6,17.7 l -84.6,-48.8 0,13.9 c 0,41.8 -33.9,75.7 -75.7,75.7 l -221.7,0 C 33.9,404.1 0,370.2 0,328.4 L 0,159.9 C 0,118.1 33.9,84.2 75.7,84.2 l 221.8,0 c 41.8,0 75.7,33.9 75.7,75.7 l 0,13.9 84.6,-48.8 c 13.5,-8 30.5,1.9 30.5,17.5 z"
+         inkscape:connector-curvature="0"
+         style="fill:#7d7d7d;fill-opacity:1" />
+    </g>
+    <g
+       id="g4153"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4155"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4157"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4159"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4161"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4163"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4165"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4167"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4169"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4171"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4173"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4175"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4177"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4179"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4181"
+       style="fill:#7d7d7d;fill-opacity:1" />
+  </g>
+  <g
+     id="camera.backyard"
+     transform="matrix(-0.00838829,0,0,-0.00838829,79.860501,39.001126)"
+     style="fill:#7d7d7d;fill-opacity:1"
+     inkscape:label="camera.backyard">
+    <g
+       id="g4149-3"
+       style="fill:#7d7d7d;fill-opacity:1">
+      <path
+         id="path4151-8"
+         d="m 488.3,142.5 0,203.1 c 0,15.7 -17,25.5 -30.6,17.7 l -84.6,-48.8 0,13.9 c 0,41.8 -33.9,75.7 -75.7,75.7 l -221.7,0 C 33.9,404.1 0,370.2 0,328.4 L 0,159.9 C 0,118.1 33.9,84.2 75.7,84.2 l 221.8,0 c 41.8,0 75.7,33.9 75.7,75.7 l 0,13.9 84.6,-48.8 c 13.5,-8 30.5,1.9 30.5,17.5 z"
+         inkscape:connector-curvature="0"
+         style="fill:#7d7d7d;fill-opacity:1" />
+    </g>
+    <g
+       id="g4153-7"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4155-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4157-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4159-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4161-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4163-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4165-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4167-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4169-9"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4171-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4173-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4175-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4177-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4179-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4181-9"
+       style="fill:#7d7d7d;fill-opacity:1" />
+  </g>
+  <g
+     id="camera.front_yard"
+     transform="matrix(0.00838829,0,0,0.00838829,104.90513,92.092624)"
+     style="fill:#7d7d7d;fill-opacity:1"
+     inkscape:label="camera.front_yard">
+    <g
+       id="g4149-1"
+       style="fill:#7d7d7d;fill-opacity:1">
+      <path
+         id="path4151-4"
+         d="m 488.3,142.5 0,203.1 c 0,15.7 -17,25.5 -30.6,17.7 l -84.6,-48.8 0,13.9 c 0,41.8 -33.9,75.7 -75.7,75.7 l -221.7,0 C 33.9,404.1 0,370.2 0,328.4 L 0,159.9 C 0,118.1 33.9,84.2 75.7,84.2 l 221.8,0 c 41.8,0 75.7,33.9 75.7,75.7 l 0,13.9 84.6,-48.8 c 13.5,-8 30.5,1.9 30.5,17.5 z"
+         inkscape:connector-curvature="0"
+         style="fill:#7d7d7d;fill-opacity:1" />
+    </g>
+    <g
+       id="g4153-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4155-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4157-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4159-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4161-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4163-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4165-3"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4167-9"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4169-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4171-89"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4173-7"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4175-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4177-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4179-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4181-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+  </g>
+  <g
+     id="camera.side_of_house"
+     transform="matrix(0.00838829,0,0,0.00838829,14.670749,95.451999)"
+     style="fill:#7d7d7d;fill-opacity:1"
+     inkscape:label="camera.side_of_house">
+    <g
+       id="g4149-1-9"
+       style="fill:#7d7d7d;fill-opacity:1">
+      <path
+         id="path4151-4-8"
+         d="m 488.3,142.5 0,203.1 c 0,15.7 -17,25.5 -30.6,17.7 l -84.6,-48.8 0,13.9 c 0,41.8 -33.9,75.7 -75.7,75.7 l -221.7,0 C 33.9,404.1 0,370.2 0,328.4 L 0,159.9 C 0,118.1 33.9,84.2 75.7,84.2 l 221.8,0 c 41.8,0 75.7,33.9 75.7,75.7 l 0,13.9 84.6,-48.8 c 13.5,-8 30.5,1.9 30.5,17.5 z"
+         inkscape:connector-curvature="0"
+         style="fill:#7d7d7d;fill-opacity:1" />
+    </g>
+    <g
+       id="g4153-5-7"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4155-5-0"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4157-1-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4159-4-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4161-2-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4163-2-3"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4165-3-7"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4167-9-0"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4169-6-0"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4171-89-9"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4173-7-0"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4175-5-3"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4177-6-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4179-8-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4181-4-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+  </g>
+  <g
+     id="camera.back_garden"
+     transform="matrix(0,0.00838829,-0.00838829,0,5.5959863,39.882242)"
+     style="fill:#7d7d7d;fill-opacity:1"
+     inkscape:label="camera.back_garden">
+    <g
+       id="g4149-1-7"
+       style="fill:#7d7d7d;fill-opacity:1">
+      <path
+         id="path4151-4-4"
+         d="m 488.3,142.5 0,203.1 c 0,15.7 -17,25.5 -30.6,17.7 l -84.6,-48.8 0,13.9 c 0,41.8 -33.9,75.7 -75.7,75.7 l -221.7,0 C 33.9,404.1 0,370.2 0,328.4 L 0,159.9 C 0,118.1 33.9,84.2 75.7,84.2 l 221.8,0 c 41.8,0 75.7,33.9 75.7,75.7 l 0,13.9 84.6,-48.8 c 13.5,-8 30.5,1.9 30.5,17.5 z"
+         inkscape:connector-curvature="0"
+         style="fill:#7d7d7d;fill-opacity:1" />
+    </g>
+    <g
+       id="g4153-5-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4155-5-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4157-1-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4159-4-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4161-2-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4163-2-0"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4165-3-9"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4167-9-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4169-6-9"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4171-89-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4173-7-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4175-5-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4177-6-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4179-8-86"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4181-4-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+  </g>
+  <g
+     id="camera.hallway"
+     transform="matrix(-0.00838829,0,0,-0.00838829,104.8605,65.016751)"
+     style="fill:#7d7d7d;fill-opacity:1"
+     inkscape:label="camera.hallway">
+    <g
+       id="g4149-3-2"
+       style="fill:#7d7d7d;fill-opacity:1">
+      <path
+         id="path4151-8-8"
+         d="m 488.3,142.5 0,203.1 c 0,15.7 -17,25.5 -30.6,17.7 l -84.6,-48.8 0,13.9 c 0,41.8 -33.9,75.7 -75.7,75.7 l -221.7,0 C 33.9,404.1 0,370.2 0,328.4 L 0,159.9 C 0,118.1 33.9,84.2 75.7,84.2 l 221.8,0 c 41.8,0 75.7,33.9 75.7,75.7 l 0,13.9 84.6,-48.8 c 13.5,-8 30.5,1.9 30.5,17.5 z"
+         inkscape:connector-curvature="0"
+         style="fill:#7d7d7d;fill-opacity:1" />
+    </g>
+    <g
+       id="g4153-7-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4155-1-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4157-8-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4159-6-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4161-1-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4163-4-9"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4165-6-3"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4167-1-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4169-9-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4171-8-0"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4173-5-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4175-2-7"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4177-8-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4179-6-7"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4181-9-7"
+       style="fill:#7d7d7d;fill-opacity:1" />
+  </g>
+  <g
+     id="camera.front_door"
+     transform="matrix(0.00838829,0,0,0.00838829,106.54575,61.076999)"
+     style="fill:#7d7d7d;fill-opacity:1"
+     inkscape:label="camera.front_door">
+    <g
+       id="g4149-17-1"
+       style="fill:#7d7d7d;fill-opacity:1">
+      <path
+         id="path4151-9-0"
+         d="m 488.3,142.5 0,203.1 c 0,15.7 -17,25.5 -30.6,17.7 l -84.6,-48.8 0,13.9 c 0,41.8 -33.9,75.7 -75.7,75.7 l -221.7,0 C 33.9,404.1 0,370.2 0,328.4 L 0,159.9 C 0,118.1 33.9,84.2 75.7,84.2 l 221.8,0 c 41.8,0 75.7,33.9 75.7,75.7 l 0,13.9 84.6,-48.8 c 13.5,-8 30.5,1.9 30.5,17.5 z"
+         inkscape:connector-curvature="0"
+         style="fill:#7d7d7d;fill-opacity:1" />
+    </g>
+    <g
+       id="g4153-55-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4155-4-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4157-7-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4159-2-5"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4161-6-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4163-8-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4165-0-8"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4167-0-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4169-8-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4171-6-1"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4173-1-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4175-6-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4177-0-6"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4179-2-4"
+       style="fill:#7d7d7d;fill-opacity:1" />
+    <g
+       id="g4181-7-2"
+       style="fill:#7d7d7d;fill-opacity:1" />
+  </g>
+  <g
+     style="fill:#7d7d7d"
+     id="switch.doorbell"
+     transform="matrix(0.28,0,0,0.28,108.98375,48.35875)"
+     inkscape:label="switch.doorbell">
+    <path
+       id="path4854"
+       d="m 7,9 0,6 4,0 5,5 0,-16 -5,5 -4,0 z"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path4856"
+       d="M 0,0 24,0 24,24 0,24 Z"
+       inkscape:connector-curvature="0"
+       style="fill:none" />
+  </g>
+</svg>
