@@ -54,8 +54,6 @@
     },
 
     onAttached() {
-      setInterval(this.updateStateTransitions.bind(this), 100);
-
       var authToken = (window.localStorage && window.localStorage.authToken) ? window.localStorage.authToken : '';
 
       var wsUri = ((window.location.protocol === 'https:') ? 'wss:' : 'ws:') + '//' + window.location.host + '/api/websocket';
@@ -77,6 +75,10 @@
       this.addExternalCss();
 
       this.loadFloorPlan();
+
+      if (this.config.groups.find(entityGroup => entityGroup.state_transitions)) {
+        setInterval(this.updateStateTransitions.bind(this), 100);
+      }
     },
 
     addExternalCss() {
