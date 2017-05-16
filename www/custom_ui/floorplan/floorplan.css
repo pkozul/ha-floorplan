@@ -12,9 +12,65 @@ svg, svg * {
   stroke-opacity: 1 !important;
 }
 
+/* Bootstrap succsss */
+
+.success-light {
+  fill: #dff0d8 !important;
+}
+
+.success-medium {
+  fill: #d6e9c6 !important;
+}
+
+.success-dark {
+  fill: #3c763d !important;
+}
+
+/* Bootstrap info */
+
+.info-light {
+  fill: #bce8f1 !important;
+}
+
+.info-medium {
+  fill: #d9edf7 !important;
+}
+
+.info-dark {
+  fill: #31708f !important;
+}
+
+/* Bootstrap warning */
+
+.warning-light {
+  fill: #faebcc !important;
+}
+
+.warning-medium {
+  fill: #fcf8e3 !important;
+}
+
+.warning-dark {
+  fill: #8a6d3b !important;
+}
+
+/* Bootstrap danger */
+
+.dange-lightr {
+  fill: #ebccd1 !important;
+}
+
+.danger-medium {
+  fill: #f2dede !important;
+}
+
+.danger-dark {
+  fill: #a94442 !important;
+}
+
 /* Last motion entity */
 
-.last_motion {
+.last-motion {
   stroke: #808080 !important;
   stroke-width: 1px !important;
   stroke-opacity: 1 !important;
@@ -22,50 +78,50 @@ svg, svg * {
 
 /* Alarm Panel */
 
-.alarm_disarmed {
-  fill: #0000DD !important;
+.alarm-disarmed {
+  fill: #3c763d !important;
 }
 
-.alarm_armed {
-  fill: #FF0000 !important;
+.alarm-armed {
+  fill: #8a6d3b !important;
 }
 
 /* Camera */
 
-.camera_idle {
+.camera-idle {
   fill: #B9CEF7 !important;
 }
 
 /* Light */
 
-.light_off {
+.light-off {
   fill: #C3B7F4 !important;
 }
 
-.light_on {
+.light-on {
   fill: #F8D2B9 !important;
 }
 
 /* Doorbell */
 
-.doorbell_off {
+.doorbell-off {
   fill: #C3B7F4 !important;
 }
 
-.doorbell_on {
+.doorbell-on {
   fill: #F8D2B9 !important;
 }
 
-/* Temperature sensors */
+/* Temperature sensor */
 
-.temp_low {
+.temp-low {
   fill: #0000FF !important;
 }
 
-.temp_medium {
+.temp-medium {
   fill: #000000 !important;
 }
 
-.temp_high {
+.temp-high {
   fill: #FF0000 !important;
 }
