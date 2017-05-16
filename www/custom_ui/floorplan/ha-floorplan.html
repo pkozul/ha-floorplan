@@ -181,6 +181,10 @@
       var svg = Polymer.dom(this.root).querySelector('.floorplan svg');
 
       for (var entityId in entities) {
+
+        if (entityId.indexOf('back_hallway') >= 0) {
+          //debugger;
+        }
         var entityState = entities[entityId];
 
         var entityConfig = this.entityConfigs[entityId];
@@ -204,13 +208,8 @@
           }
 
           if (svgShape.nodeName === 'text') {
-            var text = '';
-            if (entityConfig.group.text_template) {
-              var text = this.assemble(entityConfig.group.text_template, "entity", entityState);
-            }
-            else {
-              text = entityState.state;
-            }
+            var text = entityConfig.group.text_template ?
+              this.assemble(entityConfig.group.text_template, entityState, entities) : entityState.state;
 
             var tspan = $(svgShape).find('tspan');
             if (tspan.length) {
@@ -225,31 +224,9 @@
             }
           }
 
-          if (entityConfig.group.class_template) {
-            var className = this.assemble(entityConfig.group.class_template, "entity", entityState);
-
-            // Remove any other previously-added state class
-            for (var otherClassName in svgShape.classList) {
-              if ((otherClassName != 'entity') && (otherClassName != className)) {
-                $(svgShape).removeClass(otherClassName);
-              }
-            }
-
-            // Add the current state class
-            if (!$(svgShape).hasClass(className)) {
-              $(svgShape).addClass(className);
-            }
-          }
-          else {
-            //$(svgShape).text(entityState.state);
-          }
-
-          if (!entityConfig.group.states)
-            continue;
-
           var wasTransitionHandled = false;
 
-          if (entityConfig.group.state_transitions) {
+          if (entityConfig.group.states && entityConfig.group.state_transitions) {
             var transitionConfig = entityConfig.group.state_transitions.find(transitionConfig => (transitionConfig.to_state === entityState.state));
             if (transitionConfig && transitionConfig.from_state && transitionConfig.to_state && transitionConfig.duration) {
               // Determine the current time on the server (based on the local vs. server time difference)
@@ -272,31 +249,61 @@
             }
           }
 
-          var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityState.state));
-          if (stateConfig) {
-            if (stateConfig.fill && !wasTransitionHandled) {
-              $(svgShape).css('fill', stateConfig.fill ? stateConfig.fill : $(entityConfig.clonedSvgShape).css('fill'));
-              svgShape.style.fill = stateConfig.fill ? stateConfig.fill : entityConfig.clonedSvgShape.style.fill;
-            }
+          var targetClass = undefined;
+          var obsoleteClasses = [];
 
-            if (stateConfig.class) {
-              // Remove any other previously-added state class
-              for (var otherStateConfig of entityConfig.group.states) {
-                if (otherStateConfig.state != stateConfig.state) {
-                  if ($(svgShape).hasClass(otherStateConfig.class)) {
-                    $(svgShape).removeClass(otherStateConfig.class);
-                  }
-                }
+          if (entityConfig.group.class_template) {
+            targetClass = this.assemble(entityConfig.group.class_template, entityState, entities);
+          }
+
+          // Get the config for the current state
+          if (entityConfig.group.states) {
+            var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityState.state));
+            if (stateConfig) {
+              // Only change the fill if there was no color transition applied
+              if (stateConfig.fill && !wasTransitionHandled) {
+                $(svgShape).css('fill', stateConfig.fill ? stateConfig.fill : $(entityConfig.clonedSvgShape).css('fill'));
+                svgShape.style.fill = stateConfig.fill ? stateConfig.fill : entityConfig.clonedSvgShape.style.fill;
               }
 
-              // Add the current state class
-              if (!$(svgShape).hasClass(stateConfig.class)) {
-                $(svgShape).addClass(stateConfig.class);
+              if (stateConfig.class) {
+                targetClass = stateConfig.class;
+              }
+            }
+
+            // Remove any other previously-added state classes
+            for (var otherStateConfig of entityConfig.group.states.filter(otherStateConfig => !stateConfig || (otherStateConfig.state != stateConfig.state))) {
+              if (otherStateConfig.class && $(svgShape).hasClass(otherStateConfig.class)) {
+                obsoleteClasses.push(otherStateConfig.class);
+              }
+            }
+          }
+          else {
+            for (var otherClassName in this.getClasses(svgShape)) {
+              if (otherClassName != targetClass) {
+                obsoleteClasses.push(otherClassName);
               }
             }
           }
 
-          if (this.config.last_motion_entity && this.config.last_motion_class && (entityState.attributes.friendly_name === entities[this.config.last_motion_entity].state)) {
+          // Remove any obsolete classes from the entity
+          for (obsoleteClass of obsoleteClasses) {
+            console.log(`${entityId}: removing class "${obsoleteClasses}" (${svgShape.id})`);
+            if ($(svgShape).hasClass(obsoleteClass)) {
+              $(svgShape).removeClass(obsoleteClass);
+            }
+          }
+
+          // Add the target class to the entity
+          if (targetClass) {
+            if (!$(svgShape).hasClass(targetClass)) {
+              console.log(`${entityId}: adding class "${targetClass}" for current state "${entityState.state}" (${svgShape.id})`);
+              $(svgShape).addClass(targetClass);
+            }
+          }
+
+          if (this.config.last_motion_entity && this.config.last_motion_class && entities[this.config.last_motion_entity] &&
+            (entityState.attributes.friendly_name === entities[this.config.last_motion_entity].state)) {
             if (!$(svgShape).hasClass(this.config.last_motion_class)) {
               $(svgShape).addClass(this.config.last_motion_class);
             }
@@ -389,15 +396,14 @@
       return serverMoment;
     },
 
-    assemble(code, params, context) {
-      if (code.indexOf('return') >= 0) {
-        var func = new Function(params, code);
-        return func(context);
-      }
-      else {
-        var func = new Function(params, "return `" + code + "`;");
-        return func(context);
-      }
+    getClasses(element) {
+      Array.isArray(element.classList) ? element.classList : Object.keys(element.classList).map(key => element.classList[key]);
+    },
+
+    assemble(code, entity, entities) {
+      var functionBody = (code.indexOf('return') >= 0) ? code : `return \`${code}\`;`;
+      var func = new Function('entity', 'entities', 'hass', 'config', functionBody);
+      return func(entity, entities, this.hass, this.config);
     },
 
     debug(message) {
