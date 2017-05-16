@@ -12,7 +12,7 @@ panel_custom:
       # You can copy/paste between one and the other whenever you make any changes
 
       last_motion_entity: sensor.template_last_motion
-      last_motion_class: last_motion
+      last_motion_class: last-motion
 
       groups:
 
@@ -23,11 +23,11 @@ panel_custom:
           class_template: '
             var temp = parseFloat(entity.state.replace("°", ""));
             if (temp < 10)
-              return "temp_low";
+              return "temp-low";
             else if (temp < 30)
-              return "temp_medium";
+              return "temp-medium";
             else
-              return "temp_high";
+              return "temp-high";
             '
 
         - name: Lights
@@ -37,29 +37,29 @@ panel_custom:
              - light.patio
           states:
             - state: 'on'
-              class: 'light_on'
+              class: 'light-on'
             - state: 'off'
-              class: 'light_off'
+              class: 'light-off'
 
         - name: Switches
           entities:
              - switch.doorbell
           states:
             - state: 'on'
-              class: 'doorbell_on'
+              class: 'doorbell-on'
             - state: 'off'
-              class: 'doorbell_off'
+              class: 'doorbell-off'
 
         - name: Alarm Panel
           entities:
              - alarm_control_panel.alarm
           states:
             - state: 'armed_away'
-              class: 'alarm_armed'
+              class: 'alarm-armed'
             - state: 'armed_home'
-              class: 'alarm_armed'
+              class: 'alarm-armed'
             - state: 'disarmed'
-              class: 'alarm_disarmed'
+              class: 'alarm-disarmed'
 
         - name: Binary sensors
           entities:
@@ -86,4 +86,4 @@ panel_custom:
             - camera.backyard
           states:
             - state: 'idle'
-              class: 'camera_idle'
+              class: 'camera-idle'
