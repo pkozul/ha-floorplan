@@ -47,6 +47,10 @@
         type: Array,
         value: [],
       },
+      cssRules: {
+        type: Array,
+        value: [],
+      },
     },
 
     stopPropagation(e) {
@@ -83,11 +87,24 @@
 
     addExternalCss() {
       if (this.config.stylesheet) {
+        var stylesheetUrl = this.config.stylesheet + '?cacheBuster=' + (new Date().getTime());
+
         var link = document.createElement('link');
         link.type = 'text/css';
         link.rel = 'stylesheet';
-        link.href = this.config.stylesheet;
+        link.href = stylesheetUrl;
         Polymer.dom(this.root).appendChild(link);
+
+        jQuery.ajax({
+          url: stylesheetUrl,
+          success: function (result) {
+            var doc = document.implementation.createHTMLDocument("");
+            var styleElement = document.createElement("style");
+            styleElement.textContent = result;
+            doc.body.appendChild(styleElement);
+            this.cssRules = this.getArray(styleElement.sheet.cssRules);
+          }.bind(this)
+        });
       }
     },
 
@@ -169,7 +186,6 @@
                 $(newSvgShape).attr('title', 'test');
                 $(newSvgShape).on('click', this.onShapeClick.bind(this));
                 $(newSvgShape).css('cursor', 'pointer');
-                $(newSvgShape).addClass('entity');
               }
             }
           }
@@ -181,10 +197,6 @@
       var svg = Polymer.dom(this.root).querySelector('.floorplan svg');
 
       for (var entityId in entities) {
-
-        if (entityId.indexOf('back_hallway') >= 0) {
-          //debugger;
-        }
         var entityState = entities[entityId];
 
         var entityConfig = this.entityConfigs[entityId];
@@ -241,7 +253,8 @@
               else {
                 var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === transitionConfig.to_state));
                 if (stateConfig) {
-                  svgShape.style.fill = stateConfig.fill ? stateConfig.fill : entityConfig.clonedSvgShape.style.fill;
+                  var fill = this.getFill(stateConfig);
+                  svgShape.style.fill = fill ? fill : entityConfig.clonedSvgShape.style.fill;
                 }
               }
 
@@ -259,16 +272,8 @@
           // Get the config for the current state
           if (entityConfig.group.states) {
             var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityState.state));
-            if (stateConfig) {
-              // Only change the fill if there was no color transition applied
-              if (stateConfig.fill && !wasTransitionHandled) {
-                $(svgShape).css('fill', stateConfig.fill ? stateConfig.fill : $(entityConfig.clonedSvgShape).css('fill'));
-                svgShape.style.fill = stateConfig.fill ? stateConfig.fill : entityConfig.clonedSvgShape.style.fill;
-              }
-
-              if (stateConfig.class) {
-                targetClass = stateConfig.class;
-              }
+            if (stateConfig && stateConfig.class && !wasTransitionHandled) {
+              targetClass = stateConfig.class;
             }
 
             // Remove any other previously-added state classes
@@ -279,7 +284,7 @@
             }
           }
           else {
-            for (var otherClassName in this.getClasses(svgShape)) {
+            for (var otherClassName of this.getArray(svgShape.classList)) {
               if (otherClassName != targetClass) {
                 obsoleteClasses.push(otherClassName);
               }
@@ -288,7 +293,7 @@
 
           // Remove any obsolete classes from the entity
           for (obsoleteClass of obsoleteClasses) {
-            console.log(`${entityId}: removing class "${obsoleteClasses}" (${svgShape.id})`);
+            //console.log(`${entityId}: removing class "${obsoleteClasses}" (${svgShape.id})`);
             if ($(svgShape).hasClass(obsoleteClass)) {
               $(svgShape).removeClass(obsoleteClass);
             }
@@ -297,7 +302,7 @@
           // Add the target class to the entity
           if (targetClass) {
             if (!$(svgShape).hasClass(targetClass)) {
-              console.log(`${entityId}: adding class "${targetClass}" for current state "${entityState.state}" (${svgShape.id})`);
+              //console.log(`${entityId}: adding class "${targetClass}" for current state "${entityState.state}" (${svgShape.id})`);
               $(svgShape).addClass(targetClass);
             }
           }
@@ -341,8 +346,8 @@
               var toStateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === transitionConfig.to_state));
 
               if (fromStateConfig && toStateConfig) {
-                var fromFill = fromStateConfig.fill;
-                var toFill = toStateConfig.fill;
+                var fromFill = this.getFill(fromStateConfig);
+                var toFill = this.getFill(toStateConfig);
 
                 var elapsed = serverMoment.diff(moment(entityConfig.lastChangedTime), 'milliseconds');
                 if (elapsed < 0) {
@@ -374,6 +379,26 @@
       }
     },
 
+    getFill(stateConfig) {
+      var fill = undefined;
+
+      for (var cssRule of this.cssRules) {
+        if (cssRule.selectorText === `.${stateConfig.class}`) {
+          if (cssRule.style && cssRule.style.fill) {
+            if (cssRule.style.fill[0] === '#') {
+              fill = cssRule.style.fill;
+            }
+            else {
+              var rgb = cssRule.style.fill.substring(4).slice(0, -1).split(',').map(x => parseInt(x));
+              fill = `#${rgb[0].toString(16)}${rgb[1].toString(16)}${rgb[2].toString(16)}`;
+            }
+          }
+        }
+      }
+
+      return fill;
+    },
+
     setTransitionFill(svgShape, fromFill, toFill, value) {
       if (value >= 1) {
         svgShape.style.fill = fromFill;
@@ -396,8 +421,8 @@
       return serverMoment;
     },
 
-    getClasses(element) {
-      Array.isArray(element.classList) ? element.classList : Object.keys(element.classList).map(key => element.classList[key]);
+    getArray(list) {
+      return Array.isArray(list) ? list : Object.keys(list).map(key => list[key]);
     },
 
     assemble(code, entity, entities) {
