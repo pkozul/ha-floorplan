@@ -68,10 +68,10 @@ panel_custom:
             - binary_sensor.master_bedroom
             - binary_sensor.theatre_room
           states:
-            - state: 'on'
-              fill: '#F8B9BE'
             - state: 'off'
-              fill: '#C4EDB1'
+              class: 'info-light'
+            - state: 'on'
+              class: 'warning-light'
           state_transitions:
             - name: On to off
               from_state: 'on'
