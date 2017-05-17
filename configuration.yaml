@@ -1,0 +1,4 @@
+homeassistant:
+  customize: !include customize.yaml
+
+panel_custom: !include panel_custom.yaml
