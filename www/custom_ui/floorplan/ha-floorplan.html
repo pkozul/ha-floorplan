@@ -188,7 +188,7 @@
               var newSvgShape = $(newSvg).find('[id="' + svgShapeConfig.svgShapeId + '"]');
 
               if (newSvgShape.length) {
-                svgShapeConfig.svgShape = newSvgShape;
+                svgShapeConfig.svgShape = newSvgShape[0];
 
                 $(newSvgShape).attr('title', 'test');
                 $(newSvgShape).on('click', this.onShapeClick.bind(this));
@@ -294,7 +294,7 @@
           }
           else {
             for (var otherClassName of this.getArray(svgShape.classList)) {
-              if ((otherClassName != targetClass) && (otherStateConfig.class != 'entity')) {
+              if ((otherClassName != targetClass) && (otherClassName != 'entity')) {
                 obsoleteClasses.push(otherClassName);
               }
             }
