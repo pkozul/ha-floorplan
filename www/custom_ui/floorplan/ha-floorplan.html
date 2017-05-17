@@ -193,6 +193,7 @@
                 $(newSvgShape).attr('title', 'test');
                 $(newSvgShape).on('click', this.onShapeClick.bind(this));
                 $(newSvgShape).css('cursor', 'pointer');
+                $(newSvgShape).addClass('entity');
               }
             }
           }
@@ -286,14 +287,14 @@
 
             // Remove any other previously-added state classes
             for (var otherStateConfig of entityConfig.group.states.filter(otherStateConfig => !stateConfig || (otherStateConfig.state != stateConfig.state))) {
-              if (otherStateConfig.class && $(svgShape).hasClass(otherStateConfig.class)) {
+              if (otherStateConfig.class && (otherStateConfig.class != 'entity') && $(svgShape).hasClass(otherStateConfig.class)) {
                 obsoleteClasses.push(otherStateConfig.class);
               }
             }
           }
           else {
             for (var otherClassName of this.getArray(svgShape.classList)) {
-              if (otherClassName != targetClass) {
+              if ((otherClassName != targetClass) && (otherStateConfig.class != 'entity')) {
                 obsoleteClasses.push(otherClassName);
               }
             }
