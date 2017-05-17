@@ -87,24 +87,31 @@
 
     addExternalCss() {
       if (this.config.stylesheet) {
-        var stylesheetUrl = this.config.stylesheet + '?cacheBuster=' + (new Date().getTime());
+        var styleSheetUrl = this.config.stylesheet + '?cacheBuster=' + (new Date().getTime());
 
         var link = document.createElement('link');
         link.type = 'text/css';
         link.rel = 'stylesheet';
-        link.href = stylesheetUrl;
-        Polymer.dom(this.root).appendChild(link);
+        link.href = styleSheetUrl;
+        link.onload = () => { this.onStyleSheetLoaded(e) };
 
-        jQuery.ajax({
-          url: stylesheetUrl,
-          success: function (result) {
-            var doc = document.implementation.createHTMLDocument("");
-            var styleElement = document.createElement("style");
-            styleElement.textContent = result;
-            doc.body.appendChild(styleElement);
-            this.cssRules = this.getArray(styleElement.sheet.cssRules);
-          }.bind(this)
-        });
+        Polymer.dom(this.root).appendChild(link);
+      }
+    },
+
+    onStyleSheetLoaded(e) {
+      for (var styleSheet of this.getArray(document.styleSheets)) {
+        if (styleSheet.href && styleSheet.href.indexOf(this.config.stylesheet) >= 0) {
+          this.cssRules = this.getArray(styleSheet.cssRules);
+          return;
+        }
+      }
+
+      for (var styleSheet of this.getArray(Polymer.dom(this.root).node.styleSheets)) {
+        if (styleSheet.href && styleSheet.href.indexOf(this.config.stylesheet) >= 0) {
+          this.cssRules = this.getArray(styleSheet.cssRules);
+          return;
+        }
       }
     },
 
@@ -209,6 +216,9 @@
           var svgShapeConfig = entityConfig.svgShapeConfigs[svgShapeId];
           var svgShape = $(svg).find('[id="' + svgShapeConfig.svgShapeId + '"]')[0];
 
+          if (!svgShape)
+            continue;
+
           var title = $(svgShape).find('title');
           if (title.length) {
             var titleText = entityState.attributes.friendly_name + '\n' +
@@ -236,6 +246,9 @@
             }
           }
 
+          if (!this.cssRules || !this.cssRules.length)
+            return;
+
           var wasTransitionHandled = false;
 
           if (entityConfig.group.states && entityConfig.group.state_transitions) {
@@ -251,13 +264,8 @@
                 entityConfig.lastChangedTime = lastChangedMoment.toDate();
               }
               else {
-                var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === transitionConfig.to_state));
-                if (stateConfig) {
-                  var fill = this.getFill(stateConfig);
-                  svgShape.style.fill = fill ? fill : entityConfig.clonedSvgShape.style.fill;
-                }
+                this.setEntityStyle(svgShapeConfig, svgShape, entityConfig);
               }
-
               wasTransitionHandled = true;
             }
           }
@@ -323,32 +331,37 @@
     },
 
     updateStateTransitions() {
+      if (!this.cssRules || !this.cssRules.length)
+        return;
+
       var svg = Polymer.dom(this.root).querySelector('.floorplan svg');
 
       for (var entityId in this.entityConfigs) {
         var entityConfig = this.entityConfigs[entityId];
 
-        if (!entityConfig || !entityConfig.group.states || !entityConfig.group.state_transitions)
+        if (!entityConfig || !entityConfig.group.states || !entityConfig.group.state_transitions || (entityConfig.lastChangedTime === undefined))
           continue;
 
         for (var svgShapeId in entityConfig.svgShapeConfigs) {
           var svgShapeConfig = entityConfig.svgShapeConfigs[svgShapeId];
           var svgShape = $(svg).find('[id="' + svgShapeConfig.svgShapeId + '"]')[0];
 
-          if (entityConfig.group.state_transitions) {
-            if (entityConfig.lastChangedTime === undefined)
-              continue;
+          if (!svgShape)
+            continue;
 
-            var transitionConfig = entityConfig.group.state_transitions.find(transitionConfig => (transitionConfig.to_state === entityConfig.lastState));
-            if (transitionConfig && transitionConfig.from_state && transitionConfig.to_state && transitionConfig.duration) {
-              var serverMoment = this.getServerMoment();
-              var fromStateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === transitionConfig.from_state));
-              var toStateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === transitionConfig.to_state));
+          var wasTransitionHandled = false;
 
-              if (fromStateConfig && toStateConfig) {
-                var fromFill = this.getFill(fromStateConfig);
-                var toFill = this.getFill(toStateConfig);
+          var transitionConfig = entityConfig.group.state_transitions.find(transitionConfig => (transitionConfig.to_state === entityConfig.lastState));
+          if (transitionConfig && transitionConfig.from_state && transitionConfig.to_state && transitionConfig.duration) {
+            var serverMoment = this.getServerMoment();
+            var fromStateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === transitionConfig.from_state));
+            var toStateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === transitionConfig.to_state));
 
+            if (fromStateConfig && toStateConfig) {
+              var fromFill = this.getFill(fromStateConfig);
+              var toFill = this.getFill(toStateConfig);
+
+              if (fromFill && toFill) {
                 var elapsed = serverMoment.diff(moment(entityConfig.lastChangedTime), 'milliseconds');
                 if (elapsed < 0) {
                   this.setTransitionFill(svgShape, fromFill, toFill, 1);
@@ -362,8 +375,32 @@
                     entityConfig.lastChangedTime = undefined;
                   }
                 }
+
+                wasTransitionHandled = true;
               }
             }
+          }
+
+          if (!wasTransitionHandled) {
+            this.setEntityStyle(svgShapeConfig, svgShape, entityConfig);
+          }
+        }
+      }
+    },
+
+    setEntityStyle(svgShapeConfig, svgShape, entityConfig, state) {
+      var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityConfig.lastState));
+      if (stateConfig) {
+        var fill = this.getFill(stateConfig);
+        if (fill) {
+          svgShape.style.fill = fill;
+        }
+        else {
+          if (svgShapeConfig.clonedSvgShape) {
+            svgShape.style.fill = svgShapeConfig.clonedSvgShape.style.fill;
+          }
+          else {
+            // ???
           }
         }
       }
