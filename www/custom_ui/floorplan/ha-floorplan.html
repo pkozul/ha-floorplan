@@ -4,8 +4,8 @@
 <dom-module id="ha-floorplan">
 
   <template>
-    <div class="debug"></div>
-    <div class="floorplan" on-tap="stopPropagation"></div>
+    <div id="debug"></div>
+    <div id="floorplan" on-tap="stopPropagation"></div>
   </template>
 
 </dom-module>
@@ -171,12 +171,8 @@
           }
 
           // Create a new SVG element and copy the contents from the original SVG
-          var newSvg = document.createElementNS('', 'svg');
-          var floorplan = Polymer.dom(this.root).querySelector('.floorplan');
-          floorplan.appendChild(newSvg);
-          newSvg.outerHTML = svg.outerHTML;
-
-          newSvg = $(floorplan).find('svg');
+          var newSvg = $(`${svg.outerHTML}`)[0];
+          Polymer.dom(this.$.floorplan).node.appendChild(newSvg);
 
           $(newSvg).css('cursor', 'default');
 
@@ -202,7 +198,7 @@
     },
 
     handleEntities(entities) {
-      var svg = Polymer.dom(this.root).querySelector('.floorplan svg');
+      var svg = Polymer.dom(this.$.floorplan).querySelector('svg');
 
       for (var entityId in entities) {
         var entityState = entities[entityId];
@@ -335,7 +331,7 @@
       if (!this.cssRules || !this.cssRules.length)
         return;
 
-      var svg = Polymer.dom(this.root).querySelector('.floorplan svg');
+      var svg = Polymer.dom(this.$.floorplan).querySelector('svg');
 
       for (var entityId in this.entityConfigs) {
         var entityConfig = this.entityConfigs[entityId];
@@ -470,8 +466,8 @@
     },
 
     debug(message) {
-      var debug = Polymer.dom(this.root).querySelector('.debug');
-      $(debug).append(message + '<br>');
+      var debug = Polymer.dom(this.$.debug).node;
+      $(debug).html($(debug).html() + message + '<br>')
     },
 
     rgbToHex(rgb) {
