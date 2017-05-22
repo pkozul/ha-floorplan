@@ -10,69 +10,65 @@ svg, svg * {
   stroke: #03A9F4 !important;
   stroke-width: 1px !important;
   stroke-opacity: 1 !important;
+  stroke-width: 1px !important;
 }
 
 /* Bootstrap succsss */
 
-.success-light {
-  fill: #dff0d8 !important;
-}
-
-.success-medium {
-  fill: #d6e9c6 !important;
-}
-
-.success-dark {
+.success-text {
   fill: #3c763d !important;
+}
+
+.success-background, .success-text-background {
+  fill: #dff0d8 !important;
+  fill-opacity: 1 !important;
+  stroke: #d6e9c6 !important;
 }
 
 /* Bootstrap info */
 
-.info-light {
-  fill: #bce8f1 !important;
-}
-
-.info-medium {
-  fill: #d9edf7 !important;
-}
-
-.info-dark {
+.info-text {
   fill: #31708f !important;
+}
+
+.info-background, .info-text-background {
+  fill: #d9edf7 !important;
+  fill-opacity: 1 !important;
+  stroke: #bce8f1 !important;
+  stroke-width: 1px !important;
 }
 
 /* Bootstrap warning */
 
-.warning-light {
-  fill: #faebcc !important;
-}
-
-.warning-medium {
-  fill: #fcf8e3 !important;
-}
-
-.warning-dark {
+.warning-text {
   fill: #8a6d3b !important;
+}
+
+.warning-background, .warning-text-background  {
+  fill: #faebcc !important;
+  fill-opacity: 1px !important;
+  stroke: #fcf8e3 !important;
+  stroke-width: 1px !important;
 }
 
 /* Bootstrap danger */
 
-.danger-light {
-  fill: #ebccd1 !important;
-}
-
-.danger-medium {
-  fill: #f2dede !important;
-}
-
-.danger-dark {
+.danger-text {
   fill: #a94442 !important;
+}
+
+.danger-background, .danger-text-background {
+  fill: #ebccd1 !important;
+  fill-opacity: 1 !important;
+  stroke: #f2dede !important;
+  stroke-width: 1px !important;
 }
 
 /* Last motion entity */
 
 .last-motion {
   stroke: #808080 !important;
-  stroke-width: 1px !important;
+  stroke-width: 0.5px !important;
   stroke-opacity: 1 !important;
 }
 
