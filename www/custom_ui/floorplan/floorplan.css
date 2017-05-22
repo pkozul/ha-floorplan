@@ -45,9 +45,9 @@ svg, svg * {
 }
 
 .warning-background, .warning-text-background  {
-  fill: #faebcc !important;
+  fill: #fcf8e3 !important;
   fill-opacity: 1px !important;
-  stroke: #fcf8e3 !important;
+  stroke: #faebcc !important;
   stroke-width: 1px !important;
 }
 
@@ -58,9 +58,9 @@ svg, svg * {
 }
 
 .danger-background, .danger-text-background {
-  fill: #ebccd1 !important;
+  fill: #f2dede !important;
   fill-opacity: 1 !important;
-  stroke: #f2dede !important;
+  stroke: #ebccd1 !important;
   stroke-width: 1px !important;
 }
 
