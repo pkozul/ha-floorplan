@@ -41,6 +41,16 @@
             - state: 'off'
               class: 'doorbell-off'
 
+        - name: NVR
+          entities:
+             - binary_sensor.blue_iris_nvr
+          text_template: '${(entity.state === "on") ? "online" : "offline"}'
+          states:
+            - state: 'off'
+              class: 'danger-text'
+            - state: 'on'
+              class: 'success-text'
+
         - name: Alarm Panel
           entities:
              - alarm_control_panel.alarm
@@ -60,9 +70,9 @@
             - binary_sensor.theatre_room
           states:
             - state: 'off'
-              class: 'info-light'
+              class: 'info-background'
             - state: 'on'
-              class: 'warning-light'
+              class: 'warning-background'
           state_transitions:
             - name: On to off
               from_state: 'on'
