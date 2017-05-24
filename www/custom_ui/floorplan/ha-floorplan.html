@@ -9,7 +9,7 @@
         text-align: center;
         padding: 8px;
       }
-
+      
       .loading {
         height: 0px;
         overflow: hidden;
@@ -84,7 +84,7 @@
       var authToken = (window.localStorage && window.localStorage.authToken) ? window.localStorage.authToken : '';
 
       var wsUri = ((window.location.protocol === 'https:') ? 'wss:' : 'ws:') + '//' + window.location.host + '/api/websocket';
-      HAWS.createConnection(wsUri, { authToken: authToken }).then(conn => {
+      window.HAWS.createConnection(wsUri, { authToken: authToken }).then(conn => {
 
         conn.socket.addEventListener('message', event => {
           var data = JSON.parse(event.data);
@@ -96,7 +96,7 @@
           }
         });
 
-        HAWS.subscribeEntities(conn, entities => this.handleEntities(entities));
+        window.HAWS.subscribeEntities(conn, entities => this.handleEntities(entities));
       }, err => { console.error(err); });
 
       this.addExternalCss(() => {
@@ -119,7 +119,7 @@
         link.type = 'text/css';
         link.rel = 'stylesheet';
         link.href = styleSheetUrl;
-        link.onload = function() {
+        link.onload = function () {
           this.instance.onStyleSheetLoaded(e)
           this.callback();
         }.bind({ instance: this, callback: callback });
@@ -509,7 +509,14 @@
         var entityConfig = this.entityConfigs[entityId];
         var svgShapeConfig = entityConfig.svgShapeConfigs[e.target.id];
         if (svgShapeConfig) {
-          this.fire('hass-more-info', { entityId: svgShapeConfig.entityId });
+          if (entityConfig.group.action && entityConfig.group.action.service) {
+            var domain = window.HAWS.extractDomain(entityId);
+            this.hass.callService(domain, entityConfig.group.action.service, {
+              entity_id: entityId
+            });
+          } else {
+            this.fire('hass-more-info', { entityId: svgShapeConfig.entityId });
+          }
         }
       }
     },
