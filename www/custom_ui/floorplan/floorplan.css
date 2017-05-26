@@ -24,6 +24,7 @@ svg, svg * {
   fill: #dff0d8 !important;
   fill-opacity: 1 !important;
   stroke: #d6e9c6 !important;
+  stroke-width: 1px !important;
 }
 
 /* Bootstrap info */
@@ -47,7 +48,7 @@ svg, svg * {
 
 .warning-background, .warning-text-background  {
   fill: #fcf8e3 !important;
-  fill-opacity: 1px !important;
+  fill-opacity: 1 !important;
   stroke: #faebcc !important;
   stroke-width: 1px !important;
 }
@@ -115,10 +116,25 @@ svg, svg * {
   fill: #0000FF !important;
 }
 
+.temp-low-background {
+  fill: #d9edf7 !important;
+  fill-opacity: 1 !important;
+}
+
 .temp-medium {
   fill: #000000 !important;
 }
 
+.temp-medium-background {
+  fill: #dff0d8 !important;
+  fill-opacity: 1 !important;
+}
+
 .temp-high {
   fill: #FF0000 !important;
+}
+
+.temp-high-background {
+  fill: #f2dede !important;
+  fill-opacity: 1 !important;
 }
