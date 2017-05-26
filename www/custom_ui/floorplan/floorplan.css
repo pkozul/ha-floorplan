@@ -11,7 +11,6 @@ svg, svg * {
   stroke: #03A9F4 !important;
   stroke-width: 1px !important;
   stroke-opacity: 1 !important;
-  stroke-width: 1px !important;
 }
 
 /* Bootstrap succsss */
@@ -70,7 +69,7 @@ svg, svg * {
 
 .last-motion {
   stroke: #808080 !important;
-  stroke-width: 0.5px !important;
+  stroke-width: 1px !important;
   stroke-opacity: 1 !important;
 }
 
