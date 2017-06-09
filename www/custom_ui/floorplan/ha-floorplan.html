@@ -379,6 +379,10 @@
     },
 
     addClass(entityId, svgShape, className) {
+      if ($(svgShape).hasClass('ha-leave-me-alone')) {
+        return;
+      }
+      
       if (!$(svgShape).hasClass(className)) {
         //console.log(`${entityId}: adding class "${className}" for current state "${entityState.state}" (${svgShape.id})`);
         $(svgShape).addClass(className);
