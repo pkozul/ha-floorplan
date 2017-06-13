@@ -1,21 +1,30 @@
 # Floorplan for Home Assistant
 
-
 ![floorplan](https://user-images.githubusercontent.com/2073827/27056482-911f2e14-500b-11e7-90f0-44a344c39f85.png)
 
 ## Background
 
-The Home Assistant [front end](https://home-assistant.io/docs/frontend/) provides a great way of viewing and interacting with your entities. This project builds on top of that, allowing you to extend the front end by adding your own visuals, such as floorplans, images of your devices, etc.
+Out of the box, the Home Assistant [front end](https://home-assistant.io/docs/frontend/) provides a great way of viewing and interacting with your entities. This project builds on top of that, allowing you to extend the user interface by adding your own visuals.
 
 With Floorplan for Home Assistant, you can:
 
-- Display your floorplan image as a state card or custom panel
-- Include any number of entities (i.e. binary sensors, lights, cameras, etc.) on your floorplan
-- Style entity states using CSS
+- Integrate with Home Assistant as either a state card or a custom panel
+- Display any number of entities (i.e. binary sensors, lights, cameras, etc.)
+- Style each entity's states using CSS
 - Gradually transition between states using color gradients
 - Display the last triggered binary sensor using CSS
 - Display hover-over text for each entity
 - Call a service or display a popup dialog when an entity is clicked
+
+Despite its title, Floorplan for Home Assistant can be used as a general purpose user interface for just about anything you want to present in a visual way.
+
+The concept is quite simple. You create an SVG file and simply add shapes/images to represent your Home Assistant entities. As long as the ids match up, your SVG comes to life and displays your entities' states in real time.
+
+Although using it as a floorplan is the most common use case, you can go even further and create visuals of real world components. Some examples are:
+
+- An SVG image of a remote control with each button click triggering a service in Home Assistant
+- An SVG image of a Ring doorbell with the sensor and camera mapped to sensors in Home Assistant
+- An SVG mage of a Logitech Squeezebox media player with the screen text mapped to the state, current song, etc. in Home Assistant
 
 ## Usage
 
