@@ -15,6 +15,7 @@ With Floorplan for Home Assistant, you can:
 - Gradually transition between states using color gradients
 - Display the last triggered binary sensor using CSS
 - Display hover-over text for each entity
+- Call a service or display a popup dialog when an entity is clicked
 
 ## Usage
 
