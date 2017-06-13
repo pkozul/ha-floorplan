@@ -37,6 +37,8 @@ Of course, you can choose to have it displayed in both places.
 
 ### Option 1: Floorplan custom state card
 
+![image](https://user-images.githubusercontent.com/2073827/27063035-97aa2a6e-5032-11e7-8e8e-79935a19aebf.png)
+
 To display the floorplan as a custom state card, copy the following file from this repo to your Home Assistant directory:
 
 ```
@@ -75,6 +77,8 @@ group:
 You can also add a 'last motion' entity to keep track of which binary sensor was triggered last. See the appendix for more information.
 
 ### Option 2: Floorplan custom panel
+
+![image](https://user-images.githubusercontent.com/2073827/27063110-08d3fd82-5033-11e7-85b6-671722608394.png)
 
 To display the floorplan as a custom panel, copy the following file from this repo to your Home Assistant directory:
 
