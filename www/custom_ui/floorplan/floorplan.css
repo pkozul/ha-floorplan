@@ -86,7 +86,8 @@ svg, svg * {
 /* Camera */
 
 .camera-idle {
-  fill: #B9CEF7 !important;
+/*  fill: #B9CEF7 !important; */
+  fill: #6FAECE !important;
 }
 
 /* Light */
@@ -111,29 +112,32 @@ svg, svg * {
 
 /* Temperature sensor */
 
-.temp-low {
-  fill: #0000FF !important;
-}
-
-.temp-low-background {
+.temp-very-low-background {
   fill: #d9edf7 !important;
   fill-opacity: 1 !important;
 }
 
-.temp-medium {
-  fill: #000000 !important;
+.temp-below-average-background {
+  fill: #dcefe8 !important;
+  fill-opacity: 1 !important;
 }
 
-.temp-medium-background {
+.temp-average-background {
   fill: #dff0d8 !important;
   fill-opacity: 1 !important;
 }
 
-.temp-high {
-  fill: #FF0000 !important;
-}
-
-.temp-high-background {
+.temp-very-high-background {
   fill: #f2dede !important;
   fill-opacity: 1 !important;
+}
+
+/* Media player */
+
+.squeezebox-off {
+  fill: #8AA8A7 !important;
+}
+
+.squeezebox-on {
+  fill: #2baaa6 !important;
 }
