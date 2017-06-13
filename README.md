@@ -302,3 +302,7 @@ group:
       - sensor.template_last_motion
       - binary_sensor.floorplan
 ```
+
+## More information
+
+For discussions and more information, check out the [thread](https://community.home-assistant.io/t/floorplan-for-home-assistant) on the Home Assistant forums.
