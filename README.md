@@ -45,7 +45,7 @@ To display the floorplan as a custom state card, copy the following file from th
 www/custom_ui/state-card-floorplan.html
 ```
 
-Since Home Assistant requires a single entity to be used as the target for a state card, we create a virtual entity to represent the overall floorplan. You can choose any type of entity for this, such as the MQTT binary sensor. Add the following to your Home Assistant configuration:
+Since Home Assistant requires a single entity to be used as the target for a state card, create a virtual entity to represent the overall floorplan. You can choose any type of entity for this, such as the MQTT binary sensor. Add the following to your Home Assistant configuration:
 
 ```
 binary_sensor:
