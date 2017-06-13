@@ -43,7 +43,7 @@ You then have two options for how you want to the floorplan to appear in Home As
 - custom state card
 - custom panel
 
-Of course, you can choose to have it displayed in both places.
+Of course, you can choose to have it displayed in both places. If you have several floorplans to display (i.e. different levels of a house), that is supported too.
 
 ### Option 1: Floorplan custom state card
 
@@ -140,11 +140,13 @@ Below are some examples of groups, showing how to configure different types of e
 
 #### Sensors
 
-Below is an example of a 'Sensors' group, showing how to add a temperature sensor (as text) to your floorplan. in the screenshot above, this can be seen at text (i.e. '9.0°').
+Below is an example of a 'Sensors' group, showing how to add a temperature sensor (as text) to your floorplan. in the screenshot above, this can be seen as an SVG text element displaying the current temperature (i.e. '9.0°').
 
-The sensor's state is displayed using a text template. Whenever a text template is used, the floorplan SVG needs to contain an SVG text element whose id matches the Home Assistant entity its representing.
+The sensor's state is displayed using a `text_template`. As you can see, it contains some embedded code that determines which actual text to dispay.
 
-The sensor's CSS class is determined dynamically using a class template. In the example below, the CSS class is determined based on the actual temperature value. Both text and class templates allow you to inject your own expressions and code using JavaScript string literals.
+The sensor's CSS class is determined dynamically using a `class_template`. In the example below, the CSS class is determined based on the actual temperature value.
+
+Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript string literals. Within these string lterals, you have full access to the entity's state object, which allows you to access other properties such as last_changed, attributes, etc.
 
 ```
         - name: Sensors
@@ -163,7 +165,7 @@ The sensor's CSS class is determined dynamically using a class template. In the 
 
 #### Switches
 
-Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when this entiy is clicked.
+Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when the entiy is clicked.
 
 ```
         - name: Switches
@@ -197,7 +199,7 @@ Below is an example of a 'Lights' group, showing how to add lights to your floor
 
 #### Alarm Panel
 
-Below is an example of an 'Alarm Panel' group, showing how to add an alarm panel (as text) to your floorplan. The appearance of the alarm panel is styled using the appropriate CSS class, based on its current state. In the screenshot above, this can be seen as text (i.e. 'disarmed').
+Below is an example of an 'Alarm Panel' group, showing how to add an alarm panel (as text) to your floorplan. The appearance of the alarm panel is styled using the appropriate CSS class, based on its current state. In the screenshot above, this can be seen as an SVG text element displaying the current alarm status (i.e. 'disarmed').
 
 ```
        - name: Alarm Panel
@@ -214,7 +216,7 @@ Below is an example of an 'Alarm Panel' group, showing how to add an alarm panel
 
 #### Binary Sensors
 
-Below is an example of a 'Binary sensors' group, showing how to add binary sensors to your floorplan. The appearance of each binary sesor is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as zones (i.e. rooms).
+Below is an example of a 'Binary sensors' group, showing how to add binary sensors to your floorplan. The appearance of each binary sesor is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as SVG paths (i.e. rooms/zones of the house).
 
 The `state_transitions` section is optional, and allows your binary sensors to visually transition from one state to another, using the fill colors defined in the CSS classes associated with each state. You can specify the duration (in seconds) for the transition from one color to the other.
 
@@ -239,7 +241,7 @@ The `state_transitions` section is optional, and allows your binary sensors to v
 
 #### Cameras
 
-Below is an example of a 'Cameras' group, showing how to add cameras to your floorplan. The appearance of each camera is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as camera icons.
+Below is an example of a 'Cameras' group, showing how to add cameras to your floorplan. The appearance of each camera is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as camera icons, which were imported from an external SVG image.
 
         - name: Cameras
           entities:
@@ -253,7 +255,7 @@ Below is an example of a 'Cameras' group, showing how to add cameras to your flo
 
 #### Media Players
 
-Below is an example of a 'Media Players' group, showing how to add media players to your floorplan. The appearance of each media player is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as Logitech Squeezebox icons.
+Below is an example of a 'Media Players' group, showing how to add media players to your floorplan. The appearance of each media player is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as Logitech Squeezebox icons, which were imported from an external SVG image.
 
         - name: Media Players
           entities:
@@ -274,9 +276,9 @@ Below is an example of a 'Media Players' group, showing how to add media players
 
 ### Creating a floorplan SVG file
 
-[Inkscape](https://inkscape.org/en/develop/about-svg/) is a free application that lets you create vector images. You can make your floorplan as simple or as detailed as you want. The only requirement is that you create a shape (i.e. `rectangle`, `path`, etc.) for each entity ( i.e. binary sensor, switch, camera, etc.) you want to display on your floorplan. Each of these shapes needs to have its `id` set to the entity name in Home Assistant.
+[Inkscape](https://inkscape.org/en/develop/about-svg/) is a free application that lets you create vector images. You can make your floorplan as simple or as detailed as you want. The only requirement is that you create an element (i.e. `rect`, `path`, `text`, etc.) for each entity ( i.e. binary sensor, switch, camera, etc.) you want to display on your floorplan. Each of these elements needs to have its `id` set to the corresponding entity name in Home Assistant.
 
-For example, below is what the shape looks like for a Front Hallway binary sensor. The `id` of the shape is set to the entity name `binary_sensor.front_hallway`. This allows the shape to automatically get hooked up to the right entity when the floorplan is displayed.
+For example, below is what the SVG element looks like for a Front Hallway binary sensor. The `id` of the shape is set to the entity name `binary_sensor.front_hallway`. This allows the shape to automatically get hooked up to the right entity when the floorplan is displayed.
 
 ```html
 <path id="binary_sensor.front_hallway" d="M650 396 c0 -30 4 -34 31 -40 17 -3 107 -6 200 -6 l169 0 0 40 0 40
