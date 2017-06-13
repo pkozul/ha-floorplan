@@ -110,7 +110,7 @@ At the top of the file, you provide a name for the floorplan, as well as the loc
       stylesheet: /local/custom_ui/floorplan/floorplan.css
 ```
 
-If you want to display a 'lost motion' entity, you can include that in the next section of the file. You specify the name of the entity, as well as the CSS class used to style its appearance:
+If you want to display a 'last motion' entity, you can include that in the next section of the file. You specify the name of the entity, as well as the CSS class used to style its appearance:
 
 ```
       last_motion_entity: sensor.template_last_motion
