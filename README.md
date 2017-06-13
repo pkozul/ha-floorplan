@@ -89,6 +89,7 @@ panels/floorplan.html
 Then, add the following to your Home Assistant configuration:
 
 ```
+panel_custom: 
   - name: floorplan
     sidebar_title: Floorplan
     sidebar_icon: mdi:home
