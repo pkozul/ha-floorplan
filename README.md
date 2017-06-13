@@ -22,7 +22,7 @@ To get started, copy the following files from this repo to your Home Assistant d
 
 ```
 www/custom_ui/floorplan/ha-floorplan.html
-www/custom_ui/floorplan/floorplan.svg (refer to Appendix for info on creating your own SVG file)
+www/custom_ui/floorplan/floorplan.svg
 www/custom_ui/floorplan/floorplan.css
 ```
 
