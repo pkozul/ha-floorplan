@@ -18,7 +18,7 @@ With Floorplan for Home Assistant, you can:
 
 Despite its title, Floorplan for Home Assistant can be used as a general purpose user interface for just about anything you want to present in a visual way.
 
-The concept is quite simple. You create an SVG file and simply add shapes/images to represent your Home Assistant entities. As long as the ids match up, your SVG comes to life and displays your entities' states in real time. Your entities also become clickable, so they act as shortcuts to opening the built-in 'more info' popups that are normally displayed by Home Assistant. This means clicking on a camera icon, for example, opens the Home Assistant 'more info' popup that displays the live camera feed.
+The concept is quite simple. You create an SVG file and simply add shapes/images to represent your Home Assistant entities. As long as the ids match up, your SVG comes to life and displays your entities' states in real time. Your entities also become clickable, so they act as shortcuts to opening the built-in 'more info' popups that are normally displayed by Home Assistant. This means clicking on a camera icon, for example, opens the Home Assistant 'more info' popup that displays the live camera feed. Hovering over the entitiy displays a tooltip showing all the information related to the entity.
 
 Although using it as a floorplan is the most common use case, you can go even further and create visuals of real world components. Some examples are:
 
