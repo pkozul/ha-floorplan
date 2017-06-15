@@ -148,6 +148,22 @@ The sensor's CSS class is determined dynamically using a `class_template`. In th
 
 See the [appendix](#using-template-literals-in-your-configuration) for more information on how to use template literals in your configuration.
 
+```
+        - name: Sensors
+          entities:
+             - sensor.melbourne_now
+          text_template: '${entity.state ? entity.state : "unknown"}'
+          class_template: '
+            var temp = parseFloat(entity.state.replace("°", ""));
+            if (temp < 10)
+              return "temp-low";
+            else if (temp < 30)
+              return "temp-medium";
+            else
+              return "temp-high";
+            '
+```
+
 #### Switches
 
 Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when the entity is clicked.
