@@ -24,7 +24,7 @@ Although using it as a floorplan is the most common use case, you can go even fu
 
 - An SVG image of a remote control with each button click triggering a service in Home Assistant
 - An SVG image of a Ring doorbell with the sensor and camera mapped to sensors in Home Assistant
-- An SVG mage of a Logitech Squeezebox media player with the screen text mapped to the state, current song, etc. in Home Assistant
+- An SVG image of a Logitech Squeezebox media player with the screen text mapped to the state, current song, etc. in Home Assistant
 
 ## Usage
 
@@ -136,17 +136,17 @@ The remainder of the file is where you add your groups.
 
 You need to place each of your entities into a group, since configuration is performed at a group level. The groups can be given any name, and have no purpose other than to allow for configuration of multiple items in one place.
 
-Below are some examples of groups, showing how to configure different types of entites in the floorplan.
+Below are some examples of groups, showing how to configure different types of entities in the floorplan.
 
 #### Sensors
 
 Below is an example of a 'Sensors' group, showing how to add a temperature sensor (as text) to your floorplan. in the screenshot above, this can be seen as an SVG text element displaying the current temperature (i.e. '9.0°').
 
-The sensor's state is displayed using a `text_template`. As you can see, it contains some embedded code that determines which actual text to dispay.
+The sensor's state is displayed using a `text_template`. As you can see, it contains some embedded code that determines which actual text to display.
 
 The sensor's CSS class is determined dynamically using a `class_template`. In the example below, the CSS class is determined based on the actual temperature value.
 
-Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript string literals. Within these string lterals, you have full access to the entity's state object, which allows you to access other properties such as last_changed, attributes, etc.
+Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript template literals. Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as last_changed, attributes, etc.
 
 ```
         - name: Sensors
@@ -166,7 +166,7 @@ Both `text_template` and `class_template` allow you to inject your own expressio
 
 #### Switches
 
-Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when the entiy is clicked.
+Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when the entity is clicked.
 
 ```
         - name: Switches
@@ -217,7 +217,7 @@ Below is an example of an 'Alarm Panel' group, showing how to add an alarm panel
 
 #### Binary Sensors
 
-Below is an example of a 'Binary sensors' group, showing how to add binary sensors to your floorplan. The appearance of each binary sesor is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as SVG paths (i.e. rooms/zones of the house).
+Below is an example of a 'Binary sensors' group, showing how to add binary sensors to your floorplan. The appearance of each binary sensor is styled using the appropriate CSS class, based on its current state. In the screenshot above, these can be seen as SVG paths (i.e. rooms/zones of the house).
 
 The `state_transitions` section is optional, and allows your binary sensors to visually transition from one state to another, using the fill colors defined in the CSS classes associated with each state. You can specify the duration (in seconds) for the transition from one color to the other.
 
