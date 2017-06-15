@@ -36,7 +36,7 @@ www/custom_ui/floorplan/floorplan.svg
 www/custom_ui/floorplan/floorplan.css
 ```
 
-Although a sample floorplan SVG file is included in this repo, you will want to create your own. See the appendix for more information.
+Although a sample floorplan SVG file is included in this repo, you will want to create your own. See the [appendix](#creating-a-floorplan-svg-file) for more information.
 
 You then have two options for how you want to the floorplan to appear in Home Assistant:
 
@@ -84,7 +84,7 @@ group:
       - binary_sensor.floorplan
 ```
 
-You can also add a 'last motion' entity to keep track of which binary sensor was triggered last. See the appendix for more information.
+You can also add a 'last motion' entity to keep track of which binary sensor was triggered last. See the [appendix](#adding-a-last-motion-entity-to-your-floorplan) for more information.
 
 ### Option 2: Floorplan custom panel
 
@@ -146,28 +146,7 @@ The sensor's state is displayed using a `text_template`. As you can see, it cont
 
 The sensor's CSS class is determined dynamically using a `class_template`. In the example below, the CSS class is determined based on the actual temperature value.
 
-Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript [template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as `last_changed`, `attributes.friendly_name`, etc. The full set of objects available to your template literals is shown below:
-
-- `entity` - the state object for the current entity
-- `entities` - the state objects for all entities
-- `hass` - the [hass object](https://home-assistant.io/developers/development_hass_object/)
-- `config` - the floorplan configuration
-
-```
-        - name: Sensors
-          entities:
-             - sensor.melbourne_now
-          text_template: '${entity.state ? entity.state : "unknown"}'
-          class_template: '
-            var temp = parseFloat(entity.state.replace("°", ""));
-            if (temp < 10)
-              return "temp-low";
-            else if (temp < 30)
-              return "temp-medium";
-            else
-              return "temp-high";
-            '
-```
+See the [appendix](#using-template-literals-in-your-configuration) for more information on how to use template literals in your configuration.
 
 #### Switches
 
@@ -319,6 +298,31 @@ group:
     entities:
       - sensor.template_last_motion
       - binary_sensor.floorplan
+```
+
+### Using template literals in your configuration
+
+Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript [template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as `last_changed`, `attributes.friendly_name`, etc. The full set of objects available to your template literals is shown below:
+
+- `entity` - the state object for the current entity
+- `entities` - the state objects for all entities
+- `hass` - the [hass object](https://home-assistant.io/developers/development_hass_object/)
+- `config` - the floorplan configuration
+
+```
+        - name: Sensors
+          entities:
+             - sensor.melbourne_now
+          text_template: '${entity.state ? entity.state : "unknown"}'
+          class_template: '
+            var temp = parseFloat(entity.state.replace("°", ""));
+            if (temp < 10)
+              return "temp-low";
+            else if (temp < 30)
+              return "temp-medium";
+            else
+              return "temp-high";
+            '
 ```
 
 ## More information
