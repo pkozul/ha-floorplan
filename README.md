@@ -161,6 +161,7 @@ Both `text_template` and `class_template` allow you to inject your own expressio
               return "temp-medium";
             else
               return "temp-high";
+            '
 ```
 
 #### Switches
