@@ -146,7 +146,7 @@ The sensor's state is displayed using a `text_template`. As you can see, it cont
 
 The sensor's CSS class is determined dynamically using a `class_template`. In the example below, the CSS class is determined based on the actual temperature value.
 
-Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript [https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals](template literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as last_changed, attributes, etc. The full set of objects available to your template literals is shown below:
+Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript [template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as `last_changed`, `attributes.friendly_name`, etc. The full set of objects available to your template literals is shown below:
 
 - `entity` - the state object for the current entity
 - `entities` - the state objects for all entities
