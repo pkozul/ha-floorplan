@@ -549,12 +549,12 @@
       for (var cssRule of this.cssRules) {
         if (cssRule.selectorText.indexOf(`.${stateConfig.class}`) >= 0) {
           if (cssRule.style && cssRule.style.stroke) {
-            if (cssRule.style.fill[0] === '#') {
+            if (cssRule.style.stroke[0] === '#') {
               stroke = cssRule.style.stroke;
             }
             else {
               var rgb = cssRule.style.stroke.substring(4).slice(0, -1).split(',').map(x => parseInt(x));
-              stroke = `#${rgb[0].toString(16)[0]}${rgb[1].toString(16)[0]}${rgb[2].toString(16)[0]}`;
+              stroke = `#${rgb[0].toString(16)}${rgb[1].toString(16)}${rgb[2].toString(16)}`;
             }
           }
         }
