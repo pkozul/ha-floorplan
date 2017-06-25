@@ -86,21 +86,15 @@
     },
 
     onAttached() {
-      var authToken = (window.localStorage && window.localStorage.authToken) ? window.localStorage.authToken : '';
+      this.hass.connection.socket.addEventListener('message', event => {
+        var data = JSON.parse(event.data);
 
-      var wsUri = ((window.location.protocol === 'https:') ? 'wss:' : 'ws:') + '//' + window.location.host + '/api/websocket';
-      window.HAWS.createConnection(wsUri, { authToken: authToken }).then(conn => {
-
-        conn.socket.addEventListener('message', event => {
-          var data = JSON.parse(event.data);
-
-          // Store the time difference between the local web browser and the Home Assistant server
-          if (data.event && data.event.time_fired) {
-            var lastEventFiredTime = moment(data.event.time_fired).toDate();
-            this.timeDifference = moment().diff(moment(lastEventFiredTime), 'milliseconds');
-          }
-        });
-      }, err => { console.error(err); });
+        // Store the time difference between the local web browser and the Home Assistant server
+        if (data.event && data.event.time_fired) {
+          var lastEventFiredTime = moment(data.event.time_fired).toDate();
+          this.timeDifference = moment().diff(moment(lastEventFiredTime), 'milliseconds');
+        }
+      });
 
       this.addExternalCss(() => {
         this.loadFloorPlan(() => {
