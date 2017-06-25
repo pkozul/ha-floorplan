@@ -9,7 +9,7 @@
         text-align: center;
         padding: 8px;
       }
-      
+
       .loading {
         height: 0px;
         overflow: hidden;
@@ -46,6 +46,7 @@
     properties: {
       hass: {
         type: Object,
+        observer: 'hassChanged'
       },
       inDialog: {
         type: Boolean,
@@ -80,6 +81,10 @@
       e.stopPropagation();
     },
 
+    hassChanged: function (newHass, oldHass) {
+      this.handleEntities(newHass.states);
+    },
+
     onAttached() {
       var authToken = (window.localStorage && window.localStorage.authToken) ? window.localStorage.authToken : '';
 
@@ -95,8 +100,6 @@
             this.timeDifference = moment().diff(moment(lastEventFiredTime), 'milliseconds');
           }
         });
-
-        window.HAWS.subscribeEntities(conn, entities => this.handleEntities(entities));
       }, err => { console.error(err); });
 
       this.addExternalCss(() => {
@@ -382,7 +385,7 @@
       if ($(svgShape).hasClass('ha-leave-me-alone')) {
         return;
       }
-      
+
       if (!$(svgShape).hasClass(className)) {
         //console.log(`${entityId}: adding class "${className}" for current state "${entityState.state}" (${svgShape.id})`);
         $(svgShape).addClass(className);
@@ -475,35 +478,35 @@
     },
 
     setEntityStyle(svgShapeConfig, svgShape, entityConfig, state) {
-          var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityConfig.lastState));
-          if (stateConfig) {
-            var stroke = this.getStroke(stateConfig);
-            if (stroke) {
-              svgShape.style.stroke = stroke;
-            }
-            else {
-              if (svgShapeConfig.clonedSvgShape) {
-                svgShape.style.stroke = svgShapeConfig.clonedSvgShape.style.stroke;
-              }
-              else {
-                // ???
-              }
-            }
-
-            var fill = this.getFill(stateConfig);
-            if (fill) {
-              svgShape.style.fill = fill;
-            }
-            else {
-              if (svgShapeConfig.clonedSvgShape) {
-                svgShape.style.fill = svgShapeConfig.clonedSvgShape.style.fill;
-              }
-              else {
-                // ???
-              }
-            }
+      var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityConfig.lastState));
+      if (stateConfig) {
+        var stroke = this.getStroke(stateConfig);
+        if (stroke) {
+          svgShape.style.stroke = stroke;
+        }
+        else {
+          if (svgShapeConfig.clonedSvgShape) {
+            svgShape.style.stroke = svgShapeConfig.clonedSvgShape.style.stroke;
           }
-        },
+          else {
+            // ???
+          }
+        }
+
+        var fill = this.getFill(stateConfig);
+        if (fill) {
+          svgShape.style.fill = fill;
+        }
+        else {
+          if (svgShapeConfig.clonedSvgShape) {
+            svgShape.style.fill = svgShapeConfig.clonedSvgShape.style.fill;
+          }
+          else {
+            // ???
+          }
+        }
+      }
+    },
 
 
     onShapeClick(e) {
@@ -542,7 +545,7 @@
 
       return fill;
     },
-    
+
     getStroke(stateConfig) {
       var stroke = undefined;
 
