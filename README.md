@@ -128,13 +128,15 @@ If you want to display a 'last motion' entity, you can include that in the next 
       last_motion_class: last-motion
 ```
 
-The remainder of the file is where you add your groups.
+The remainder of the file is where you add your floorplan groups. These floorplan groups are not to be confused with [Home Assistant entity groups](https://home-assistant.io/components/group) that are used to combine multiple entities into one.
 
 ```
       groups:
 ```
 
-You need to place each of your entities into a group, since configuration is performed at a group level. The groups can be given any name, and have no purpose other than to allow for configuration of multiple items in one place.
+You need to place each of your entities into a floorplan group, since configuration is performed at a floorplan group level. The floorplan groups can be given any name, and have no purpose other than to allow for configuration of multiple items in one place.
+
+If you've already created some Home Assistant entity groups, you can actually include those groups (i.e. `group.kitchen_lights`) in the flooorplan group, rather than explicity including each entity individually.
 
 Below are some examples of groups, showing how to configure different types of entities in the floorplan.
 
@@ -152,6 +154,7 @@ See the [appendix](#using-template-literals-in-your-configuration) for more info
         - name: Sensors
           entities:
              - sensor.melbourne_now
+             - group.major_city_temp_sensors
           text_template: '${entity.state ? entity.state : "unknown"}'
           class_template: '
             var temp = parseFloat(entity.state.replace("°", ""));
