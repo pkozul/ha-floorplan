@@ -1,6 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://momentjs.com/downloads/moment.js"></script>
-<script src="svg-pan-zoom.js"></script>
+<script src="svg-pan-zoom.min.js"></script>
 
 <dom-module id="ha-floorplan">
 
@@ -232,16 +232,6 @@
 
           $(newSvg).css('cursor', 'default');
 
-          // Enable pan / zoom if enabled in config
-          if ((this.instance.config.pan_zoom === null) || (this.instance.config.pan_zoom !== undefined)) {
-            svgPanZoom($(newSvg)[0], {
-              zoomEnabled: true,
-              controlIconsEnabled: true,
-              fit: true,
-              center: true,
-            });
-          }
-
           for (var entityId in this.instance.entityConfigs) {
             var entityConfig = this.instance.entityConfigs[entityId];
             for (svgShapeId in entityConfig.svgShapeConfigs) {
@@ -254,6 +244,7 @@
 
                 $(newSvgShape).attr('title', 'test');
                 $(newSvgShape).on('click', this.instance.onShapeClick.bind(this.instance));
+                $(newSvgShape).on('touchstart', this.instance.onShapeClick.bind(this.instance));
                 $(newSvgShape).css('cursor', 'pointer');
                 $(newSvgShape).addClass('entity');
 
@@ -273,6 +264,16 @@
                 }
               }
             }
+          }
+
+          // Enable pan / zoom if enabled in config
+          if ((this.instance.config.pan_zoom === null) || (this.instance.config.pan_zoom !== undefined)) {
+            svgPanZoom($(newSvg)[0], {
+              zoomEnabled: true,
+              controlIconsEnabled: true,
+              fit: true,
+              center: true,
+            });
           }
 
           this.callback();
@@ -541,7 +542,6 @@
         }
       }
     },
-
 
     onShapeClick(e) {
       for (var entityId in this.entityConfigs) {
