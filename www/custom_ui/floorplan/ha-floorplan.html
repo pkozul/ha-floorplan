@@ -14,6 +14,11 @@
         height: 0px;
         overflow: hidden;
       }
+
+      #debug {
+        color: #FF851B;
+        display: none;
+      }
     </style>
 
     <template is='dom-if' if='[[isLoading]]'>
@@ -22,7 +27,10 @@
       </div>
     </template>
 
-    <div id="debug"></div>
+    <div id="debug">
+      <ul></ul>
+    </div>
+
     <div id="floorplan" on-tap="stopPropagation"></div>
 
   </template>
@@ -154,7 +162,25 @@
           var svgShapes = $(svg).find('*').toArray();
 
           for (var entityGroup of this.instance.config.groups) {
+            var targetEntityIds = [];
             for (var entityId of entityGroup.entities) {
+              if (entityId.indexOf('group.') == 0) {
+                var group = this.instance.hass.states[entityId];
+                if (group) {
+                  for (var targetEntityId of group.attributes.entity_id) {
+                    targetEntityIds.push(targetEntityId);
+                  }
+                }
+                else {
+                  this.instance.debug(`Cannot find '${entityId}' in HA group configuration`);
+                }
+              }
+              else {
+                targetEntityIds.push(entityId);
+              }
+            }
+
+            for (var entityId of targetEntityIds) {
               var entityConfig = {
                 group: entityGroup,
                 lastState: undefined,
@@ -181,6 +207,9 @@
                     entityId: entityId
                   };
                 });
+              }
+              else {
+                this.instance.debug(`Cannot find element '${entityId}' in SVG file`);
               }
             }
           }
@@ -594,7 +623,8 @@
 
     debug(message) {
       var debug = Polymer.dom(this.$.debug).node;
-      $(debug).html($(debug).html() + message + '<br>')
+      $(debug).find('ul').append(`<li>${message}</li>`)
+      $(debug).css('display', 'block');
     },
 
     rgbToHex(rgb) {
