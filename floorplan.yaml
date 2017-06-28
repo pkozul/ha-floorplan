@@ -11,6 +11,8 @@
           entities:
              - sensor.melbourne_now
           text_template: '${entity.state ? entity.state : "unknown"}'
+            # text_template: '${entity.state ? Math.ceil(entity.state) : "undefined"}'  
+            #An example of rounding up a temp number 90.1 to 90.
           class_template: '
             var temp = parseFloat(entity.state.replace("°", ""));
             if (temp < 10)
