@@ -127,6 +127,12 @@ If you want to support panning and zooming within your SVG file, add the followi
       pan_zoom:
 ```
 
+If you want the floorplan to display any warnings (i.e. SVG file does not contain required elements), add the following:
+
+```
+      warnings:
+```
+
 If you want to display a 'last motion' entity, you can include that in the next section of the file. You specify the name of the entity, as well as the CSS class used to style its appearance:
 
 ```
