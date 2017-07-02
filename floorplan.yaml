@@ -2,6 +2,10 @@
       image: /local/custom_ui/floorplan/floorplan.svg
       stylesheet: /local/custom_ui/floorplan/floorplan.css
 
+      # warnings:            # enable warnings
+      # pan_zoom:            # enable panning / zooming
+      # hide_app_toolbar:    # hide the application toolbar (when used as a custom panel)
+
       last_motion_entity: sensor.template_last_motion
       last_motion_class: last-motion
 
