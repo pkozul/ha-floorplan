@@ -121,16 +121,22 @@ At the top of the file, you provide a name for the floorplan, as well as the loc
       stylesheet: /local/custom_ui/floorplan/floorplan.css
 ```
 
+If you want the floorplan to display any warnings (i.e. SVG file does not contain required elements), add the following:
+
+```
+      warnings:
+```
+
 If you want to support panning and zooming within your SVG file, add the following:
 
 ```
       pan_zoom:
 ```
 
-If you want the floorplan to display any warnings (i.e. SVG file does not contain required elements), add the following:
+If you want to hide the main application toolbar and display the floorplan in true fullscreen mode (when used as a custom panel), add the following:
 
 ```
-      warnings:
+      hide_app_toolbar:
 ```
 
 If you want to display a 'last motion' entity, you can include that in the next section of the file. You specify the name of the entity, as well as the CSS class used to style its appearance:
