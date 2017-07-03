@@ -1,6 +1,12 @@
       name: Demo Floorplan
       image: /local/custom_ui/floorplan/floorplan.svg
       stylesheet: /local/custom_ui/floorplan/floorplan.css
+      
+      # These options are optional.  
+      #pan_zoom enables experimental Pan and Zoom features.
+      pan_zoom:
+      #warnings adds in debug code to find out why things might ot be working correctly. 
+      warnings:
 
       # warnings:            # enable warnings
       # pan_zoom:            # enable panning / zooming
