@@ -22,19 +22,17 @@
       }
     </style>
 
-    <!--div id="container"-->
-      <template is='dom-if' if='[[isLoading]]'>
-        <div class='loading-container'>
-          <paper-spinner active alt='Loading'></paper-spinner>
-        </div>
-      </template>
-
-      <div id="debug">
-        <ul></ul>
+    <template is='dom-if' if='[[isLoading]]'>
+      <div class='loading-container'>
+        <paper-spinner active alt='Loading'></paper-spinner>
       </div>
+    </template>
 
-      <div id="floorplan" on-tap="stopPropagation"></div>
-    <!--/div-->
+    <div id="debug">
+      <ul></ul>
+    </div>
+
+    <div id="floorplan" on-tap="stopPropagation"></div>
 
   </template>
 
