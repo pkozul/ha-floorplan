@@ -22,17 +22,19 @@
       }
     </style>
 
-    <template is='dom-if' if='[[isLoading]]'>
-      <div class='loading-container'>
-        <paper-spinner active alt='Loading'></paper-spinner>
+    <!--div id="container"-->
+      <template is='dom-if' if='[[isLoading]]'>
+        <div class='loading-container'>
+          <paper-spinner active alt='Loading'></paper-spinner>
+        </div>
+      </template>
+
+      <div id="debug">
+        <ul></ul>
       </div>
-    </template>
 
-    <div id="debug">
-      <ul></ul>
-    </div>
-
-    <div id="floorplan" on-tap="stopPropagation"></div>
+      <div id="floorplan" on-tap="stopPropagation"></div>
+    <!--/div-->
 
   </template>
 
@@ -160,6 +162,8 @@
           $(svg).width('100%');
           $(svg).css('position', this.instance.isPanel ? 'absolute' : 'relative');
 
+          var uniqueId = (new Date()).getTime();
+
           var svgShapes = $(svg).find('*').toArray();
 
           for (var entityGroup of this.instance.config.groups) {
@@ -201,6 +205,11 @@
                 };
 
                 $(svgShape).find('*').each((i, svgNestedShape) => {
+                  // Ensure that all child elements have an Id.
+                  if (!svgNestedShape.id) {
+                    svgNestedShape.id = uniqueId++;
+                  }
+
                   entityConfig.svgShapeConfigs[svgNestedShape.id] = {
                     svgShapeId: svgNestedShape.id,
                     svgShape: svgNestedShape,
