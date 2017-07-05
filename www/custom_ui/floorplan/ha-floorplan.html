@@ -95,6 +95,12 @@
     },
 
     onAttached() {
+      if (!this.config.groups) {
+        this.isLoading = false;
+        this.debug(`Cannot find 'groups' in floorplan configuration`);
+        return;
+      }
+
       this.hass.connection.socket.addEventListener('message', event => {
         var data = JSON.parse(event.data);
 
