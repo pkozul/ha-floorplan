@@ -308,7 +308,7 @@ For example, below is what the SVG element looks like for a Front Hallway binary
 ```
 
 If you need a good source of SVG files for icons or images, you can check out the following resources : 
-[Material Design Icons](https://materialdesignicons.com/), [Noun Project](https://materialdesignicons.com/) and [Flat Icon](http://flaticon.com)
+[Material Design Icons](https://materialdesignicons.com/), [Noun Project](https://thenounproject.com/) and [Flat Icon](http://flaticon.com)
 
 ### Adding a last motion entity to your floorplan
 
