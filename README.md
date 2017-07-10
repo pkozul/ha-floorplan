@@ -154,7 +154,20 @@ The remainder of the file is where you add your floorplan groups. These floorpla
 
 You need to place each of your entities into a floorplan group, since configuration is performed at a floorplan group level. The floorplan groups can be given any name, and have no purpose other than to allow for configuration of multiple items in one place.
 
-If you've already created some Home Assistant entity groups, you can actually include those groups (i.e. `group.kitchen_lights`) in the flooorplan group, rather than explicity including each entity individually.
+```
+        - name: Lights
+          entities:
+             - light.kitchen
+             - group.pantry_lights
+          groups:
+             - group.living_area_lights
+```
+
+If you've already created some Home Assistant entity groups, you can actually include those groups in two different ways:
+
+- single - the group will be represented as a single entity (`group.pantry_lights` in the example above). These sorts of Home Assistant entity groups get added beneath `entities:`).
+
+- exploded - the group will be exploded into separate entities (`group.living_area_lights` in the example above). These sorts of Home Assistant entity groups get added beneath `groups:`).
 
 Below are some examples of groups, showing how to configure different types of entities in the floorplan.
 
