@@ -265,7 +265,7 @@
                 $(newSvgShape).on('click', this.instance.onShapeClick.bind(this.instance));
                 $(newSvgShape).on('touchstart', this.instance.onShapeClick.bind(this.instance));
                 $(newSvgShape).css('cursor', 'pointer');
-                $(newSvgShape).addClass('entity');
+                $(newSvgShape).addClass('ha-entity');
 
                 if ((newSvgShape[0].nodeName === 'text') && (newSvgShape[0].id === entityId)) {
                   var boundingBox = newSvgShape[0].getBBox();
@@ -390,6 +390,8 @@
             targetClass = this.assemble(entityConfig.group.class_template, entityState, entities);
           }
 
+          var originalClasses = this.getArray(svgShapeConfig.clonedSvgShape.classList);
+
           // Get the config for the current state
           if (entityConfig.group.states) {
             var stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityState.state));
@@ -398,16 +400,22 @@
             }
 
             // Remove any other previously-added state classes
-            for (var otherStateConfig of entityConfig.group.states.filter(otherStateConfig => !stateConfig || (otherStateConfig.state != stateConfig.state))) {
-              if (otherStateConfig.class && (otherStateConfig.class != 'entity') && $(svgShape).hasClass(otherStateConfig.class)) {
-                obsoleteClasses.push(otherStateConfig.class);
+            for (var otherStateConfig of entityConfig.group.states) {
+              if (!stateConfig || (otherStateConfig.state != stateConfig.state)) {
+                if (otherStateConfig.class && (otherStateConfig.class != 'ha-entity') && $(svgShape).hasClass(otherStateConfig.class)) {
+                  if (originalClasses.indexOf(otherStateConfig.class) < 0) {
+                    obsoleteClasses.push(otherStateConfig.class);
+                  }
+                }
               }
             }
           }
           else {
             for (var otherClassName of this.getArray(svgShape.classList)) {
-              if ((otherClassName != targetClass) && (otherClassName != 'entity')) {
-                obsoleteClasses.push(otherClassName);
+              if ((otherClassName != targetClass) && (otherClassName != 'ha-entity')) {
+                if (originalClasses.indexOf(otherClassName) < 0) {
+                  obsoleteClasses.push(otherClassName);
+                }
               }
             }
           }
