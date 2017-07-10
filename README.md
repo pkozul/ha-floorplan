@@ -377,6 +377,23 @@ Both `text_template` and `class_template` allow you to inject your own expressio
             '
 ```
 
+## Troubleshooting
+
+To get things up and running, the recommended web browser to use is Google Chrome. Pressing F12 displays the Developer Tools. When you press F5 to reload your floorplan page, the Console window will show any errors that may have occurred.
+
+If you're not seeing latest changes that you've made, try clearing the web browser cache. This can also be done in the Chrome Developer Tools. Select the Network tab, right click and select Clear browser cache.
+
+If you're not able to access the floorplan in your web browswer at all, it could be that you've been locked out of Home Assistant due to too many failed login attempts. Check the file `ip_bans.yaml` in the root Home Assistant config directory and remove your IP address if it's in there.
+
+If you encounter any issues with your entities not appearing, or not correctly showing state changes, firstly make sure that `warnings:` is added to your floorplan config. It will report any SVG elements that are missing, misspelt, etc.
+
+If you're adding your own CSS classes for styling your entities, make sure you escape the dot character in the id, by prefixing it with a backlash:
+
+```
+#light\.hallway:hover {
+}
+```
+
 ## More information
 
 For discussions and more information, check out the [thread](https://community.home-assistant.io/t/floorplan-for-home-assistant) on the Home Assistant forums.
