@@ -172,8 +172,10 @@
 
           for (var entityGroup of this.instance.config.groups) {
             var targetEntityIds = [];
-            for (var entityId of entityGroup.entities) {
-              if (entityId.indexOf('group.') == 0) {
+
+            // Split out HA entity groups into separate entities
+            if (entityGroup.groups) {
+              for (var entityId of entityGroup.groups) {
                 var group = this.instance.hass.states[entityId];
                 if (group) {
                   for (var targetEntityId of group.attributes.entity_id) {
@@ -184,7 +186,11 @@
                   this.instance.warn(`Cannot find '${entityId}' in HA group configuration`);
                 }
               }
-              else {
+            }
+
+            // HA entities treated as is
+            if (entityGroup.entities) {
+              for (var entityId of entityGroup.entities) {
                 targetEntityIds.push(entityId);
               }
             }
