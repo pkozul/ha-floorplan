@@ -199,7 +199,7 @@ See the [appendix](#using-template-literals-in-your-configuration) for more info
 
 #### Switches
 
-Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when the entity is clicked.
+Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which domain service should be called when the entity is clicked.
 
 ```
         - name: Switches
@@ -211,6 +211,7 @@ Below is an example of a 'Switches' group, showing how to add switches to your f
             - state: 'off'
               class: 'doorbell-off'
           action:
+            domain: switch
             service: toggle
 ```
 
