@@ -168,6 +168,20 @@ If you've already created some Home Assistant entity groups, you can actually in
           groups:
              - group.living_area_lights
 ```
+
+In addition to monitoring your entities in real time, you can also trigger actions when your entities are clicked. Below is an example of such an action. Whenever one of the lights in the group is clicked, an action is triggered that calls the Home Assistant 'toggle' service. See the [appendix](#triggering-actions) for more information.
+
+```
+        - name: Lights
+          entities:
+             - light.kitchen
+             - group.pantry_lights
+          groups:
+             - group.living_area_lights
+          action:
+            service: toggle
+```
+
 Below are some examples of groups, showing how to configure different types of entities in the floorplan.
 
 #### Sensors
@@ -199,7 +213,7 @@ See the [appendix](#using-template-literals-in-your-configuration) for more info
 
 #### Switches
 
-Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when the entity is clicked. The 'domain' is optional, and defaults to either the domain of the entity being clicked (for regular entities), or to 'homeassistant' (for HA group entities).
+Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state.
 
 ```
         - name: Switches
@@ -355,7 +369,7 @@ group:
 
 ### Using template literals in your configuration
 
-Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript [template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as `last_changed`, `attributes.friendly_name`, etc. The full set of objects available to your template literals is shown below:
+The settings `text_template`, `class_template`, and `action_template` allow you to inject your own expressions and code using JavaScript [template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as `last_changed`, `attributes.friendly_name`, etc. The full set of objects available to your template literals is shown below:
 
 - `entity` - the state object for the current entity
 - `entities` - the state objects for all entities
@@ -377,6 +391,62 @@ Both `text_template` and `class_template` allow you to inject your own expressio
               return "temp-high";
             '
 ```
+
+### Triggering actions
+
+Within each group, you can define an `action` that triggers a call to the specified Home Assistant service when an entity is clicked. The `domain` is optional, and defaults to either the domain of the entity being clicked (for regular entities, i.e. 'light'), or to 'homeassistant' (for Home Assistant group entities).
+
+In its simplest form, an `action` can be used to toggle an enity (or a group of entities, in the case of a Home assistant group).
+
+```
+           action:
+            service: toggle
+```
+
+You can also explictly set the `domain` which will be used when calling the service.
+
+```
+          action:
+            domain: homeassistant
+            service: toggle
+```
+
+For services that support additional data, you can include that as well. Below is an example of setting the transition and brightness when switching on a light.
+
+```
+          action:
+            domain: light
+            service: turn_on
+            data:
+              transition: 50
+              brightness: 75
+```
+
+When an entity is clicked, it can actually trigger an action on another entity. The example below shows how clicking on a light triggers a different light to be switched on, by supplying the other's light's `entity_id` as part of the action.
+
+```
+          action:
+            domain: light
+            service: turn_on
+            data:
+              entity_id: light.some_other_light
+              transition: 50
+              brightness: 75
+```
+
+For more flexibility, you can use the `data_template` to dynamically generate data required for your `action`. The example below shows how a JSON object is dynamically created and populated with data. Thanks to template literals, you can inject code to evaluate expressions at runtime. Just for the purposes of illustration, the example shows the use of the JavaScript Math.min() function being used in conjunction with another entity's current state.
+
+ ```
+          action:
+            domain: light
+            service: turn_on
+            data_template: '
+              {
+                "entity_id": "light.some_other_light",
+                "brightness": ${Math.min(entities["zone.home"].attributes.radius, 50)}
+              }
+              '
+ ```
 
 ## Troubleshooting
 
