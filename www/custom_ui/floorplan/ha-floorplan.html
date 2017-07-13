@@ -588,9 +588,9 @@
               if (action.data_template) {
                 var entities = this.hass.states;
                 var entityState = entities[entityId];
-debugger;
-var result = this.assemble(action.data_template, entityState, entities);
-                data = JSON.parse(this.assemble(action.data_template, entityState, entities));
+
+				var result = this.assemble(action.data_template, entityState, entities);
+                data = JSON.parse(result);
               }
 
               if (!data.entity_id)
