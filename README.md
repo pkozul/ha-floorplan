@@ -450,7 +450,9 @@ For more flexibility, you can use the `data_template` to dynamically generate da
 
 ## Troubleshooting
 
-To get things up and running, the recommended web browser to use is Google Chrome. Pressing F12 displays the Developer Tools. When you press F5 to reload your floorplan page, the Console pane will show any errors that may have occurred. Also check the Network tab to see if any of the scripts failed to load. Ad-blockers have been known to prevent some scripts from loading.
+First of all, checking the indentation of the floorplan config. All the examples above show the correct level of indentantion.
+
+The recommended web browser to use is Google Chrome. Pressing F12 displays the Developer Tools. When you press F5 to reload your floorplan page, the Console pane will show any errors that may have occurred. Also check the Network tab to see if any of the scripts failed to load. Ad-blockers have been known to prevent some scripts from loading.
 
 If you're not seeing latest changes that you've made, try clearing the web browser cache. This can also be done in the Chrome Developer Tools. Select the Network tab, right click and select Clear browser cache.
 
