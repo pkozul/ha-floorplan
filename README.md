@@ -403,12 +403,19 @@ In its simplest form, an `action` can be used to toggle an enity (or a group of 
             service: toggle
 ```
 
-You can also explictly set the `domain` which will be used when calling the service.
+You can also explictly set the `domain` if you want to call a service from a particular domain.
 
 ```
           action:
             domain: homeassistant
             service: toggle
+```
+The ability to specify a domain means you can kick off just about any service available in Home Assistant (scripts, automations, notifcations, shell commands, TTS, etc.).
+
+```
+          action:
+            domain: script
+            service: sound_frontdoor_chime
 ```
 
 For services that support additional data, you can include that as well. Below is an example of setting the transition and brightness when switching on a light.
