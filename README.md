@@ -450,7 +450,7 @@ For more flexibility, you can use the `data_template` to dynamically generate da
 
 ## Troubleshooting
 
-First of all, checking the indentation of the floorplan config. All the examples above show the correct level of indentantion.
+First of all, check the indentation of the floorplan config. All the examples above show the correct level of indentantion, so make sure that's done before proceedeing further.
 
 The recommended web browser to use is Google Chrome. Pressing F12 displays the Developer Tools. When you press F5 to reload your floorplan page, the Console pane will show any errors that may have occurred. Also check the Network tab to see if any of the scripts failed to load. Ad-blockers have been known to prevent some scripts from loading.
 
