@@ -33,11 +33,16 @@
              - light.hallway
              - light.living_room
              - light.patio
+             - group.kitchen_lights
+             - group.living_room_lights
           states:
             - state: 'on'
               class: 'light-on'
             - state: 'off'
               class: 'light-off'
+          action:
+            domain: homeassistant   # This optional parameter allows you to use other services such as homeassistant.toggle like here.
+            service: toggle
 
         - name: Switches
           entities:
