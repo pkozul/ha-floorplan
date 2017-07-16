@@ -10,12 +10,12 @@
         text-align: center;
         padding: 8px;
       }
-      
+
       .loading {
         height: 0px;
         overflow: hidden;
       }
-      
+
       #warnings {
         color: #FF851B;
         display: none;
@@ -263,8 +263,8 @@
                 svgShapeConfig.svgShape = newSvgShape[0];
 
                 $(newSvgShape).attr('title', 'test');
-                $(newSvgShape).on('click', this.instance.onShapeClick.bind(this.instance));
-                $(newSvgShape).on('touchstart', this.instance.onShapeClick.bind(this.instance));
+                $(newSvgShape).on('click', this.instance.onShapeClick.bind({ instance: this.instance, entityId: entityId }));
+                $(newSvgShape).on('touchstart', this.instance.onShapeClick.bind({ instance: this.instance, entityId: entityId }));
                 $(newSvgShape).css('cursor', 'pointer');
                 $(newSvgShape).addClass('ha-entity');
 
@@ -387,8 +387,9 @@
           if (entityConfig.group.image_template) {
             imageUrl = this.assemble(entityConfig.group.image_template, entityState, entities);
             if (entityConfig.imageUrl !== imageUrl) {
-              this.loadImage(imageUrl);
               entityConfig.imageUrl = imageUrl;
+
+              this.loadImage(imageUrl, (embeddedSvg) => {});
             }
           }
 
@@ -464,7 +465,7 @@
 
           var embeddedSvg = $(result).find('svg');
 
-          embeddedSvg.attr('id', `$image.{entityId}`);
+          embeddedSvg.attr('id', `image.${entityId}`);
           embeddedSvg.attr('preserveAspectRatio', 'xMinYMin meet')
           embeddedSvg
             .attr('height', bbox.height)
@@ -475,11 +476,20 @@
           $(embeddedSvg).find('*').append(document.createElementNS('', 'title'));
           $(embeddedSvg).find('title').html('Some title');
           $(embeddedSvg).find('*').attr('title', 'Some title');
-          $(embeddedSvg).find('*').on('click', (e) => { console.log(e.target.id); });
+          $(embeddedSvg).find('*').on('click', this.onShapeClick.bind({ instance: this, entityId: entityId }));
+          $(embeddedSvg).find('*').on('touchstart', this.onShapeClick.bind({ instance: this, entityId: entityId }));
           $(embeddedSvg).find('*').css('cursor', 'pointer');
           $(embeddedSvg).find('*').addClass('ha-entity');
 
+          // Remove previous SVG
+          var previousEmbeddedSvg = $(svg).find('[id="' + embeddedSvg.attr('id') + '"]');
+          $(previousEmbeddedSvg).find('*').off('click');
+          $(previousEmbeddedSvg).find('*').off('touchstart');
+          $(previousEmbeddedSvg).remove()
+
           $(svg).append(embeddedSvg);
+
+          callback(embeddedSvg);
 
         }.bind(this)
       });
@@ -613,41 +623,38 @@
     },
 
     onShapeClick(e) {
-      for (var entityId in this.entityConfigs) {
-        var entityConfig = this.entityConfigs[entityId];
-        var svgShapeConfig = entityConfig.svgShapeConfigs[e.target.id];
-        if (svgShapeConfig) {
-          if (entityConfig.group.action) {
-            var action = entityConfig.group.action;
-            if (action.service) {
-              var domain = action.domain ? action.domain : window.HAWS.extractDomain(entityId);
-              domain = (domain == 'group') ? 'homeassistant' : domain;
+      var entityId = this.entityId;
 
-              var data = {};
-              if (action.data) {
-                data = action.data;
-              }
-              if (action.data_template) {
-                var entities = this.hass.states;
-                var entityState = entities[entityId];
+      var entityConfig = this.instance.entityConfigs[entityId];
+      if (entityConfig.group.action) {
+        var action = entityConfig.group.action;
+        if (action.service) {
+          var domain = action.domain ? action.domain : window.HAWS.extractDomain(entityId);
+          domain = (domain == 'group') ? 'homeassistant' : domain;
 
-                var result = this.assemble(action.data_template, entityState, entities);
-                data = JSON.parse(result);
-              }
-
-              if (!data.entity_id)
-                data['entity_id'] = entityId;
-
-              this.hass.callService(domain, action.service, data);
-            }
-            else {
-              this.fire('hass-more-info', { entityId: svgShapeConfig.entityId });
-            }
+          var data = {};
+          if (action.data) {
+            data = action.data;
           }
-          else {
-            this.fire('hass-more-info', { entityId: svgShapeConfig.entityId });
+          if (action.data_template) {
+            var entities = this.instance.hass.states;
+            var entityState = entities[entityId];
+
+            var result = this.instance.assemble(action.data_template, entityState, entities);
+            data = JSON.parse(result);
           }
+
+          if (!data.entity_id)
+            data['entity_id'] = entityId;
+
+          this.instance.hass.callService(domain, action.service, data);
         }
+        else {
+          this.instance.fire('hass-more-info', { entityId: entityId });
+        }
+      }
+      else {
+        this.instance.fire('hass-more-info', { entityId: entityId });
       }
     },
 
