@@ -671,8 +671,8 @@ L 184 140 L 184 137 L 202 137 L 202 131 L 201 131 L 201 117 L 202 117 L 202 114 
      xml:space="preserve"
      x="58.988018"
      y="33.493843"
-     id="sensor.melbourne_now"
-     inkscape:label="sensor.melbourne_now "><tspan
+     id="sensor.dark_sky_temperature"
+     inkscape:label="sensor.dark_sky_temperature "><tspan
        sodipodi:role="line"
        id="tspan4629-03-2-3"
        x="58.988018"
