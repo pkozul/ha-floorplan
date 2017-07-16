@@ -10,12 +10,12 @@
         text-align: center;
         padding: 8px;
       }
-
+      
       .loading {
         height: 0px;
         overflow: hidden;
       }
-
+      
       #warnings {
         color: #FF851B;
         display: none;
@@ -200,7 +200,8 @@
                 group: entityGroup,
                 lastState: undefined,
                 lastChangedTime: undefined,
-                svgShapeConfigs: {}
+                svgShapeConfigs: {},
+                imageUrl: undefined
               };
 
               this.instance.entityConfigs[entityId] = entityConfig;
@@ -383,6 +384,14 @@
             }
           }
 
+          if (entityConfig.group.image_template) {
+            imageUrl = this.assemble(entityConfig.group.image_template, entityState, entities);
+            if (entityConfig.imageUrl !== imageUrl) {
+              this.loadImage(imageUrl);
+              entityConfig.imageUrl = imageUrl;
+            }
+          }
+
           var targetClass = undefined;
           var obsoleteClasses = [];
 
@@ -441,6 +450,39 @@
           }
         }
       }
+    },
+
+    loadImage(imageUrll, callback) {
+      var svg = Polymer.dom(this.$.floorplan).querySelector('svg');
+      jQuery.ajax({
+        url: imageUrl, // allow the browser cache to be used
+        success: function (result) {
+          var entityId = 'sensor.melbourne_dark_sky_icon';
+          var svgShape = $(svg).find('[id="' + entityId + '"]');
+          var bbox = svgShape[0].getBBox();
+          var clientRect = svgShape[0].getBoundingClientRect();
+
+          var embeddedSvg = $(result).find('svg');
+
+          embeddedSvg.attr('id', `$image.{entityId}`);
+          embeddedSvg.attr('preserveAspectRatio', 'xMinYMin meet')
+          embeddedSvg
+            .attr('height', bbox.height)
+            .attr('width', bbox.width)
+            .attr('x', bbox.x)
+            .attr('y', bbox.y);
+
+          $(embeddedSvg).find('*').append(document.createElementNS('', 'title'));
+          $(embeddedSvg).find('title').html('Some title');
+          $(embeddedSvg).find('*').attr('title', 'Some title');
+          $(embeddedSvg).find('*').on('click', (e) => { console.log(e.target.id); });
+          $(embeddedSvg).find('*').css('cursor', 'pointer');
+          $(embeddedSvg).find('*').addClass('ha-entity');
+
+          $(svg).append(embeddedSvg);
+
+        }.bind(this)
+      });
     },
 
     addClass(entityId, svgShape, className) {
@@ -589,7 +631,7 @@
                 var entities = this.hass.states;
                 var entityState = entities[entityId];
 
-				var result = this.assemble(action.data_template, entityState, entities);
+                var result = this.assemble(action.data_template, entityState, entities);
                 data = JSON.parse(result);
               }
 
