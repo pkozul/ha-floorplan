@@ -388,8 +388,7 @@
             imageUrl = this.assemble(entityConfig.group.image_template, entityState, entities);
             if (entityConfig.imageUrl !== imageUrl) {
               entityConfig.imageUrl = imageUrl;
-
-              this.loadImage(imageUrl, (embeddedSvg) => {});
+              this.loadImage(imageUrl, entityId, (embeddedSvg) => {});
             }
           }
 
@@ -453,12 +452,11 @@
       }
     },
 
-    loadImage(imageUrll, callback) {
+    loadImage(imageUrl, entityId, callback) {
       var svg = Polymer.dom(this.$.floorplan).querySelector('svg');
       jQuery.ajax({
         url: imageUrl, // allow the browser cache to be used
         success: function (result) {
-          var entityId = 'sensor.melbourne_dark_sky_icon';
           var svgShape = $(svg).find('[id="' + entityId + '"]');
           var bbox = svgShape[0].getBBox();
           var clientRect = svgShape[0].getBoundingClientRect();
