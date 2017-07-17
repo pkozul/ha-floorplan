@@ -16,6 +16,11 @@
         overflow: hidden;
       }
 
+      #errors {
+        color: #FF0000;
+        display: none;
+      }
+
       #warnings {
         color: #FF851B;
         display: none;
@@ -27,6 +32,10 @@
         <paper-spinner active alt='Loading'></paper-spinner>
       </div>
     </template>
+
+    <div id="errors">
+      <ul></ul>
+    </div>
 
     <div id="warnings">
       <ul></ul>
@@ -95,6 +104,8 @@
     },
 
     onAttached() {
+      window.onerror = this.handleWindowError.bind(this);
+
       if (!this.config.groups) {
         this.isLoading = false;
         this.warn(`Cannot find 'groups' in floorplan configuration`);
@@ -121,6 +132,24 @@
       if (this.config.groups.find(entityGroup => entityGroup.state_transitions)) {
         setInterval(this.updateStateTransitions.bind(this), 100);
       }
+    },
+
+    handleWindowError(msg, url, lineNo, columnNo, error) {
+      if (msg.toLowerCase().indexOf("script error") >= 0){
+        alert('Script Error: See Browser Console for Detail');
+      }
+      else {
+        var message = [
+          msg,
+          'URL: ' + url,
+          'Line: ' + lineNo + ', column: ' + columnNo,
+          'Error: ' + JSON.stringify(error)
+        ].join('<br>');
+
+        this.error(message);
+      }
+
+      return false;
     },
 
     addExternalCss(callback) {
@@ -726,6 +755,12 @@
       var functionBody = (code.indexOf('return') >= 0) ? code : `return \`${code}\`;`;
       var func = new Function('entity', 'entities', 'hass', 'config', functionBody);
       return func(entity, entities, this.hass, this.config);
+    },
+
+    error(message) {
+      var errors = Polymer.dom(this.$.errors).node;
+      $(errors).find('ul').append(`<li>${message}</li>`)
+      $(errors).css('display', 'block');
     },
 
     warn(message) {
