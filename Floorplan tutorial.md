@@ -55,3 +55,9 @@ Add the following lines to your floorplan.yaml file:
       - state: 'off'
         class: 'light-off'
 ```
+
+## 1.5 Upload your floorplan
+Upload and overwrite the floorplan.svg file with your own, customized, file.
+
+## 1.6 Restart Home Assistant
+You need to do this in order to pick up the changes you made to the floorplan.yaml-file.
