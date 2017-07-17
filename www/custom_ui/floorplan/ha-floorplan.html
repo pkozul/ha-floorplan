@@ -136,7 +136,7 @@
 
     handleWindowError(msg, url, lineNo, columnNo, error) {
       if (msg.toLowerCase().indexOf("script error") >= 0){
-        alert('Script Error: See Browser Console for Detail');
+        this.error('Script error: See browser console for detail');
       }
       else {
         var message = [
