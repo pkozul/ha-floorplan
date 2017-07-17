@@ -1,3 +1,9 @@
+<!--
+  Floorplan for Home Assistant
+  Version: 1.0.0
+  https://github.com/pkozul/ha-floorplan
+-->
+
 <script src="lib/jquery-3.2.1.min.js"></script>
 <script src="lib//moment.min.js"></script>
 <script src="lib/svg-pan-zoom.min.js"></script>
@@ -352,9 +358,10 @@
 
           var title = $(svgShape).find('title');
           if (title.length) {
+            var dateFormat = this.config.date_format ? this.config.date_format : 'DD-MMM-YYYY';
             var titleText = entityState.attributes.friendly_name + '\n' +
               'State: ' + entityState.state + '\n' +
-              'Last changed date: ' + moment(entityState.last_changed).format('DD-MMM-YYYY') + '\n' +
+              'Last changed date: ' + moment(entityState.last_changed).format(dateFormat) + '\n' +
               'Last changed time: ' + moment(entityState.last_changed).format('HH:mm:ss');
 
             $(title).html(titleText);
