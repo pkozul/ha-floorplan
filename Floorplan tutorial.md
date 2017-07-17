@@ -22,4 +22,6 @@ I've set the size of my floorplan-file to match the resolution of a full-screen 
 
 
 ## 1.2 Draw your building
-Start drawing your building
+Start drawing your house/apartment using rectangles. Add two placeholders for lights using the circle tool. Also add a text string that we will be using for showing the temperature. These steps have been taken in the image below.
+
+![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/simple_plan.PNG)
