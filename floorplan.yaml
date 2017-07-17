@@ -3,10 +3,11 @@
       stylesheet: /local/custom_ui/floorplan/floorplan.css
       
       # These options are optional
-      # warnings:            # enable warnings (to find out why things might ot be working correctly)
-      # pan_zoom:            # enable experimental panning / zooming
-      # hide_app_toolbar:    # hide the application toolbar (when used as a custom panel)
-
+      # warnings:                  # enable warnings (to find out why things might ot be working correctly)
+      # pan_zoom:                  # enable experimental panning / zooming
+      # hide_app_toolbar:          # hide the application toolbar (when used as a custom panel)
+      # date_format: DD-MMM-YYYY   # Date format to use in hover-over text
+      
       last_motion_entity: sensor.template_last_motion
       last_motion_class: last-motion
 
