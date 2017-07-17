@@ -34,3 +34,24 @@ To link an object in the floorplan-file to Home Assistant, you first set its obj
 - Do the same for the other light and also with the text.
 
 ![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/object_properties.PNG)
+
+## 1.4 Add the necessary config to your floorplan.yaml-file
+Add the following lines to your floorplan.yaml file:
+
+```
+    - name: temp_forecastio
+      entities:
+        - sensor.forecastio_apparent_temperature
+      text_template: '${entity.state ? Math.ceil(entity.state) + "°": "undefined"}'
+      class_template: 'return "static-temp";'
+
+  - name: Lights
+    entities:
+      - light.hall_1
+      - light.hall_2
+    states:
+      - state: 'on'
+        class: 'light-on'
+      - state: 'off'
+        class: 'light-off'
+```
