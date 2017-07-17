@@ -474,6 +474,10 @@ If you're adding your own CSS classes for styling your entities, make sure you e
 }
 ```
 
+## Resources
+
+Check out Patrik's tuturial on [how to create a custom floorplan SVG](Own floorplan svg-file tutorial.md)
+
 ## More information
 
 For discussions and more information, check out the [thread](https://community.home-assistant.io/t/floorplan-for-home-assistant) on the Home Assistant forums.
