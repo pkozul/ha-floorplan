@@ -1,6 +1,6 @@
-# Creating your own floorplan from scratch #
+# Creating your own custom floorplan-file from scratch #
 
-This is a short guide to creating your own floorplan.
+This is a short guide to creating your own floorplan-file, based on your own home.
 
 Recommended resources:
 - [Inkscape](https://inkscape.org/en/) for editing your floorplan
@@ -22,7 +22,7 @@ I've set the size of my floorplan-file to match the resolution of a full-screen 
 
 
 ## 1.2 Draw your building
-Start drawing your house/apartment using rectangles. Add two placeholders for lights using the circle tool. Also add a text string that we will be using for showing the temperature. These steps have been taken in the image below.
+Start drawing your house/apartment using rectangles. Add two placeholders for lights using the circle tool (or download and insert more classy looking ones from the Noun Project). Also add a text string that we will be using for showing the temperature. These steps have been taken in the image below.
 
 ![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/simple_plan.PNG)
 
