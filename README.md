@@ -476,7 +476,7 @@ If you're adding your own CSS classes for styling your entities, make sure you e
 
 ## Resources
 
-Check out Patrik's tuturial on [how to create a custom floorplan SVG](own-floorplan-svg-file-tutorial.md)
+Check out Patrik's tutorial on [how to create a custom floorplan SVG](own-floorplan-svg-file-tutorial.md)
 
 ## More information
 
