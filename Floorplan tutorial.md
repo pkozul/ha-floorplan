@@ -18,5 +18,8 @@ I've set the size of my floorplan-file to match the resolution of a full-screen 
 - Set view box x, y, width and height to: 0, 0, 1024, 768.
 - Close the document properties and save the file as floorplan.svg
 
-## 1.2 Set the size of the work area
+![floorplan](tutorial_images/workearea_size.png)
+
+
+## 1.2 Draw your building
 Start drawing your building
