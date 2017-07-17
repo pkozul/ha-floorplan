@@ -25,3 +25,6 @@ I've set the size of my floorplan-file to match the resolution of a full-screen 
 Start drawing your house/apartment using rectangles. Add two placeholders for lights using the circle tool. Also add a text string that we will be using for showing the temperature. These steps have been taken in the image below.
 
 ![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/simple_plan.PNG)
+
+## 1.3 Link the items to entities in Home Assistant
+To link an object in the floorplan-file to Home Assistant, you first set its object id to the name of the entity in Home Assistant. There are two lights: ```light.hall_1``` and ```light.hall_2``` as well as a temperature sensor ```sensor.forecastio_apparent_temperature```. To link an entity, right click one of the circles and select "Object properties". You will see something along "ID: xzyy3212". Set the ID to light.hall_1 as shown in the image below. Click "Set". Click outside of the circle and click inside it again and make sure Inkscape hasn't added "_" to the end of the ID.
