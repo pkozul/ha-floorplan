@@ -18,7 +18,7 @@ I've set the size of my floorplan-file to match the resolution of a full-screen 
 - Set view box x, y, width and height to: 0, 0, 1024, 768.
 - Close the document properties and save the file as floorplan.svg
 
-![floorplan](tutorial_images/workearea_size.png)
+![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/workearea_size.PNG)
 
 
 ## 1.2 Draw your building
