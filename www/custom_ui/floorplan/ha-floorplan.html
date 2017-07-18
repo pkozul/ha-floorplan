@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.0
+  Version: 1.0.1
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -226,7 +226,13 @@
             // HA entities treated as is
             if (entityGroup.entities) {
               for (var entityId of entityGroup.entities) {
-                targetEntityIds.push(entityId);
+                var entity = this.instance.hass.states[entityId];
+                if (entity) {
+                  targetEntityIds.push(entityId);
+                }
+                else {
+                  this.instance.warn(`Cannot find '${entityId}' in HA group configuration`);
+                }
               }
             }
 
