@@ -99,7 +99,7 @@ panels/floorplan.html
 Then, add the following to your Home Assistant configuration:
 
 ```
-panel_custom: 
+panel_custom:
   - name: floorplan
     sidebar_title: Floorplan
     sidebar_icon: mdi:home
@@ -321,6 +321,17 @@ Below is an example of a 'Media Players' group, showing how to add media players
             - state: 'playing'
               class: 'squeezebox-on'
 
+#### Toggle layers
+
+You can use layer functionality to show/hide a whole set of switches/sensors that you don't always want to show up. Create an input boolean that you use as the entity id of some icon that is used for a button in the floorplan.svg-file. Then create a layer in the svg-file that you, for this example, name floorplan_toggle_sonos_button_layer.
+
+            - name: Buttons
+              entities:
+                - input_boolean.floorplan_toggle_sonos_button
+              layer_toggle: true
+              action:
+                service: toggle
+
 ## Appendix
 
 ### Creating a floorplan SVG file
@@ -334,7 +345,7 @@ For example, below is what the SVG element looks like for a Front Hallway binary
 -200 0 -200 0 0 -34z"/>
 ```
 
-If you need a good source of SVG files for icons or images, you can check out the following resources : 
+If you need a good source of SVG files for icons or images, you can check out the following resources :
 [Material Design Icons](https://materialdesignicons.com/), [Noun Project](https://thenounproject.com/) and [Flat Icon](http://flaticon.com)
 
 ### Adding a last motion entity to your floorplan

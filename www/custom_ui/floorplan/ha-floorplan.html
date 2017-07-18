@@ -434,6 +434,17 @@
             }
           }
 
+          if (entityConfig.group.layer_toggle) {
+             var targetLayer = entityId.split('.')[1] + "_layer"
+             var svgShape = $(svg).find('[id="' + targetLayer + '"]')[0];
+
+              if(entityState.state == 'on'){
+                svgShape.style.display = 'inline';
+              }else {
+                svgShape.style.display = 'none';
+              }
+          }
+
           var targetClass = undefined;
           var obsoleteClasses = [];
 
