@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.2
+  Version: 1.0.3
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -416,13 +416,13 @@
           }
 
           if (entityConfig.group.layer_toggle) {
-             var targetLayer = entityId.split('.')[1] + "_layer"
-             var svgElement = $(svg).find('[id="' + targetLayer + '"]')[0];
-             svgElement.style.display = (entityState.state == 'on') ? 'inline' : 'none';
+             let targetLayer = entityId.split('.')[1] + "_layer"
+             let svgLayerElement = $(svg).find('[id="' + targetLayer + '"]')[0];
+             svgLayerElement.style.display = (entityState.state == 'on') ? 'inline' : 'none';
           }
 
-          var targetClass = undefined;
-          var obsoleteClasses = [];          
+          let targetClass = undefined;
+          let obsoleteClasses = [];          
 
           if (entityConfig.group.class_template) {
             targetClass = this.assemble(entityConfig.group.class_template, entityState, entities);
