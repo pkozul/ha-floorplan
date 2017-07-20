@@ -211,6 +211,51 @@ See the [appendix](#using-template-literals-in-your-configuration) for more info
             '
 ```
 
+Below is an example of using dynamic images which are swapped out at runtime, based on the sensor's current state. In the example below, the `sensor.melbourne_dark_sky_icon` entitiy is mapped to a `<rect>` in the SVG file with the same id (which simply acts as a placeholder). Whenever the temperature sensor changes state, the `image_template` is evaluated to determine which SVG image should be emebedded within the bounds of the `<rect>`.
+
+```
+      groups:
+
+        - name: Dark Sky Sensors
+          entities:
+            - sensor.home_dark_sky_icon
+          image_template: '
+            var imageName = "";
+
+            switch (entity.state) {
+              case "clear-day":
+                imageName = "day";
+                break;
+
+              case "clear-night":
+                imageName = "night";
+                break;
+
+              case "partly-cloudy-day":
+                imageName = "cloudy-day-1";
+                break;
+
+              case "partly-cloudy-night":
+                imageName = "cloudy-night-1";
+                break;
+
+              case "cloudy":
+                imageName = "cloudy";
+                break;
+
+              case "rain":
+                imageName = "rainy-1";
+                break;
+
+              case "snow":
+                imageName = "snowy-1";
+                break;
+            }
+
+            return "/local/custom_ui/floorplan/images/weather/" + imageName + ".svg";
+            '
+```
+
 #### Switches
 
 Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state.
