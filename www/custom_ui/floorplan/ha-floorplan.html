@@ -415,8 +415,14 @@
             this.setHoverOverText(embeddedSvg, entityState);
           }
 
-          let targetClass = undefined;
-          let obsoleteClasses = [];
+          if (entityConfig.group.layer_toggle) {
+             var targetLayer = entityId.split('.')[1] + "_layer"
+             var svgElement = $(svg).find('[id="' + targetLayer + '"]')[0];
+             svgElement.style.display = (entityState.state == 'on') ? 'inline' : 'none';
+          }
+
+          var targetClass = undefined;
+          var obsoleteClasses = [];          
 
           if (entityConfig.group.class_template) {
             targetClass = this.assemble(entityConfig.group.class_template, entityState, entities);
