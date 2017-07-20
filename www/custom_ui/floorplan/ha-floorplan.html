@@ -695,7 +695,7 @@
       let fill = undefined;
 
       for (let cssRule of this.cssRules) {
-        if (cssRule.selectorText.indexOf(`.${stateConfig.class}`) >= 0) {
+        if (cssRule.selectorText && cssRule.selectorText.indexOf(`.${stateConfig.class}`) >= 0) {
           if (cssRule.style && cssRule.style.fill) {
             if (cssRule.style.fill[0] === '#') {
               fill = cssRule.style.fill;
@@ -715,7 +715,7 @@
       let stroke = undefined;
 
       for (let cssRule of this.cssRules) {
-        if (cssRule.selectorText.indexOf(`.${stateConfig.class}`) >= 0) {
+        if (cssRule.selectorText && cssRule.selectorText.indexOf(`.${stateConfig.class}`) >= 0) {
           if (cssRule.style && cssRule.style.stroke) {
             if (cssRule.style.stroke[0] === '#') {
               stroke = cssRule.style.stroke;
