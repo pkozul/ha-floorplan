@@ -139,6 +139,12 @@ If you want to hide the main application toolbar and display the floorplan in tr
       hide_app_toolbar:
 ```
 
+To set the date format displayed in the hover-over text, add the following:
+
+```
+      date_format: DD-MMM-YYYY
+```
+
 If you want to display a 'last motion' entity, you can include that in the next section of the file. You specify the name of the entity, as well as the CSS class used to style its appearance:
 
 ```
