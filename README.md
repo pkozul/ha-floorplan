@@ -366,16 +366,25 @@ Below is an example of a 'Media Players' group, showing how to add media players
             - state: 'playing'
               class: 'squeezebox-on'
 
-#### Toggle layers
+#### Toggling the visibility of entities
 
-You can use layer functionality to show/hide a whole set of switches/sensors that you don't always want to show up. Create an input boolean that you use as the entity id of some icon that is used for a button in the floorplan.svg-file. Then create a layer in the svg-file that you, for this example, name floorplan_toggle_sonos_button_layer.
+If you'd like to control the visibility of your entities, you can create a layer in your SVG file (using the `<g>` element) that contains the entities you want show/hide, along with a button (using `<rect>`, for example) that is actually used to toggle the visiblity. Below is an example of a button `media_players_button` that toggles the visibility of all media players in the floorplan (i.e. those that are contained within the `media_players_layer` layer). The floorplan toggles between the two CSS classes whenever the button is clicked.
 
-            - name: Buttons
-              entities:
-                - input_boolean.floorplan_toggle_sonos_button
-              layer_toggle: true
-              action:
-                service: toggle
+```
+        - name: Media Players
+          elements:
+            - media_players_button
+          action:
+            domain: class
+            service: toggle
+            data:
+              elements:
+                - media_players_layer
+              classes:
+                - layer-visible
+                - layer-hidden
+              default_class: layer-hidden
+```
 
 ## Appendix
 
