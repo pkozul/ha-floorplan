@@ -99,7 +99,7 @@ panels/floorplan.html
 Then, add the following to your Home Assistant configuration:
 
 ```
-panel_custom: 
+panel_custom:
   - name: floorplan
     sidebar_title: Floorplan
     sidebar_icon: mdi:home
@@ -139,6 +139,12 @@ If you want to hide the main application toolbar and display the floorplan in tr
       hide_app_toolbar:
 ```
 
+To set the date format displayed in the hover-over text, add the following:
+
+```
+      date_format: DD-MMM-YYYY
+```
+
 If you want to display a 'last motion' entity, you can include that in the next section of the file. You specify the name of the entity, as well as the CSS class used to style its appearance:
 
 ```
@@ -154,7 +160,33 @@ The remainder of the file is where you add your floorplan groups. These floorpla
 
 You need to place each of your entities into a floorplan group, since configuration is performed at a floorplan group level. The floorplan groups can be given any name, and have no purpose other than to allow for configuration of multiple items in one place.
 
-If you've already created some Home Assistant entity groups, you can actually include those groups (i.e. `group.kitchen_lights`) in the flooorplan group, rather than explicity including each entity individually.
+If you've already created some Home Assistant entity groups, you can actually include those groups in two different ways:
+
+- single - the group will be represented as a single entity (`group.pantry_lights` in the example below). These sorts of Home Assistant entity groups get added beneath `entities:`).
+
+- exploded - the group will be exploded into separate entities (`group.living_area_lights` in the example below). These sorts of Home Assistant entity groups get added beneath `groups:`).
+
+```
+        - name: Lights
+          entities:
+             - light.kitchen
+             - group.pantry_lights
+          groups:
+             - group.living_area_lights
+```
+
+In addition to monitoring your entities in real time, you can also trigger actions when your entities are clicked. Below is an example of such an action. Whenever one of the lights in the group is clicked, an action is triggered that calls the Home Assistant 'toggle' service. See the [appendix](#triggering-actions) for more information.
+
+```
+        - name: Lights
+          entities:
+             - light.kitchen
+             - group.pantry_lights
+          groups:
+             - group.living_area_lights
+          action:
+            service: toggle
+```
 
 Below are some examples of groups, showing how to configure different types of entities in the floorplan.
 
@@ -185,9 +217,54 @@ See the [appendix](#using-template-literals-in-your-configuration) for more info
             '
 ```
 
+Below is an example of using dynamic images which are swapped out at runtime, based on the sensor's current state. In the example below, the `sensor.home_dark_sky_icon` entitiy is mapped to a `<rect>` in the SVG file with the same id (which simply acts as a placeholder). Whenever the temperature sensor changes state, the `image_template` is evaluated to determine which SVG image should be emebedded within the bounds of the `<rect>`.
+
+```
+      groups:
+
+        - name: Dark Sky Sensors
+          entities:
+            - sensor.home_dark_sky_icon
+          image_template: '
+            var imageName = "";
+
+            switch (entity.state) {
+              case "clear-day":
+                imageName = "day";
+                break;
+
+              case "clear-night":
+                imageName = "night";
+                break;
+
+              case "partly-cloudy-day":
+                imageName = "cloudy-day-1";
+                break;
+
+              case "partly-cloudy-night":
+                imageName = "cloudy-night-1";
+                break;
+
+              case "cloudy":
+                imageName = "cloudy";
+                break;
+
+              case "rain":
+                imageName = "rainy-1";
+                break;
+
+              case "snow":
+                imageName = "snowy-1";
+                break;
+            }
+
+            return "/local/custom_ui/floorplan/images/weather/" + imageName + ".svg";
+            '
+```
+
 #### Switches
 
-Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state. The `action` is optional, and allows you to specify which service should be called when the entity is clicked.
+Below is an example of a 'Switches' group, showing how to add switches to your floorplan. The appearance of each switch is styled using the appropriate CSS class, based on its current state.
 
 ```
         - name: Switches
@@ -199,6 +276,7 @@ Below is an example of a 'Switches' group, showing how to add switches to your f
             - state: 'off'
               class: 'doorbell-off'
           action:
+            domain: switch
             service: toggle
 ```
 
@@ -294,6 +372,26 @@ Below is an example of a 'Media Players' group, showing how to add media players
             - state: 'playing'
               class: 'squeezebox-on'
 
+#### Toggling the visibility of entities
+
+If you'd like to control the visibility of your entities, you can create a layer in your SVG file (using the `<g>` element) that contains the entities you want show/hide, along with a button (using `<rect>`, for example) that is actually used to toggle the visiblity. Below is an example of a button `media_players_button` that toggles the visibility of all media players in the floorplan (i.e. those that are contained within the `media_players_layer` layer). The floorplan toggles between the two CSS classes whenever the button is clicked.
+
+```
+        - name: Media Players
+          elements:
+            - media_players_button
+          action:
+            domain: class
+            service: toggle
+            data:
+              elements:
+                - media_players_layer
+              classes:
+                - layer-visible
+                - layer-hidden
+              default_class: layer-hidden
+```
+
 ## Appendix
 
 ### Creating a floorplan SVG file
@@ -307,8 +405,8 @@ For example, below is what the SVG element looks like for a Front Hallway binary
 -200 0 -200 0 0 -34z"/>
 ```
 
-If you need a good source of SVG files for icons or images, you can check out the following resources : 
-[Material Design Icons](https://materialdesignicons.com/), [Noun Project](https://materialdesignicons.com/) and [Flat Icon](http://flaticon.com)
+If you need a good source of SVG files for icons or images, you can check out the following resources :
+[Material Design Icons](https://materialdesignicons.com/), [Noun Project](https://thenounproject.com/) and [Flat Icon](http://flaticon.com)
 
 ### Adding a last motion entity to your floorplan
 
@@ -342,7 +440,7 @@ group:
 
 ### Using template literals in your configuration
 
-Both `text_template` and `class_template` allow you to inject your own expressions and code using JavaScript [template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as `last_changed`, `attributes.friendly_name`, etc. The full set of objects available to your template literals is shown below:
+The settings `text_template`, `class_template`, and `action_template` allow you to inject your own expressions and code using JavaScript [template literals](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Template_literals). Within these template literals, you have full access to the entity's state object, which allows you to access other properties such as `last_changed`, `attributes.friendly_name`, etc. The full set of objects available to your template literals is shown below:
 
 - `entity` - the state object for the current entity
 - `entities` - the state objects for all entities
@@ -364,6 +462,92 @@ Both `text_template` and `class_template` allow you to inject your own expressio
               return "temp-high";
             '
 ```
+
+### Triggering actions
+
+Within each group, you can define an `action` that triggers a call to the specified Home Assistant service when an entity is clicked. The `domain` is optional, and defaults to either the domain of the entity being clicked (for regular entities, i.e. 'light'), or to 'homeassistant' (for Home Assistant group entities).
+
+In its simplest form, an `action` can be used to toggle an enity (or a group of entities, in the case of a Home assistant group).
+
+```
+           action:
+            service: toggle
+```
+
+You can also explictly set the `domain` if you want to call a service from a particular domain.
+
+```
+          action:
+            domain: homeassistant
+            service: toggle
+```
+The ability to specify a domain means you can kick off just about any service available in Home Assistant (scripts, automations, notifcations, shell commands, TTS, etc.).
+
+```
+          action:
+            domain: script
+            service: sound_frontdoor_chime
+```
+
+For services that support additional data, you can include that as well. Below is an example of setting the transition and brightness when switching on a light.
+
+```
+          action:
+            domain: light
+            service: turn_on
+            data:
+              transition: 50
+              brightness: 75
+```
+
+When an entity is clicked, it can actually trigger an action on another entity. The example below shows how clicking on a light triggers a different light to be switched on, by supplying the other's light's `entity_id` as part of the action.
+
+```
+          action:
+            domain: light
+            service: turn_on
+            data:
+              entity_id: light.some_other_light
+              transition: 50
+              brightness: 75
+```
+
+For more flexibility, you can use the `data_template` to dynamically generate data required for your `action`. The example below shows how a JSON object is dynamically created and populated with data. Thanks to template literals, you can inject code to evaluate expressions at runtime. Just for the purposes of illustration, the example shows the use of the JavaScript Math.min() function being used in conjunction with another entity's current state.
+
+ ```
+          action:
+            domain: light
+            service: turn_on
+            data_template: '
+              {
+                "entity_id": "light.some_other_light",
+                "brightness": ${Math.min(entities["zone.home"].attributes.radius, 50)}
+              }
+              '
+ ```
+
+## Troubleshooting
+
+First of all, check the indentation of the floorplan config. All the examples above show the correct level of indentantion, so make sure that's done before proceedeing further.
+
+The recommended web browser to use is Google Chrome. Pressing F12 displays the Developer Tools. When you press F5 to reload your floorplan page, the Console pane will show any errors that may have occurred. Also check the Network tab to see if any of the scripts failed to load. Ad-blockers have been known to prevent some scripts from loading.
+
+If you're not seeing latest changes that you've made, try clearing the web browser cache. This can also be done in the Chrome Developer Tools. Select the Network tab, right click and select Clear browser cache.
+
+If you're not able to access the floorplan in your web browswer at all, it could be that you've been locked out of Home Assistant due to too many failed login attempts. Check the file `ip_bans.yaml` in the root Home Assistant config directory and remove your IP address if it's in there.
+
+If you encounter any issues with your entities not appearing, or not correctly showing state changes, firstly make sure that `warnings:` is added to your floorplan config. It will report any SVG elements that are missing, misspelt, etc.
+
+If you're adding your own CSS classes for styling your entities, make sure you escape the dot character in the id, by prefixing it with a backlash:
+
+```
+#light\.hallway:hover {
+}
+```
+
+## Resources
+
+Check out Patrik's tutorial on [how to create a custom floorplan SVG](own-floorplan-svg-file-tutorial.md)
 
 ## More information
 
