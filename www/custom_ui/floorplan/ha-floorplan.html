@@ -83,6 +83,10 @@
         type: Boolean,
         value: false,
       },
+      isBlockingClicks: {
+        type: Boolean,
+        value: false,
+      },
       config: {
         type: Object,
       },
@@ -336,8 +340,7 @@
                 if (svgElement.length) {
                   svgElementConfig.svgElement = svgElement[0];
 
-                  $(svgElement).on('click', this.instance.onEntityClick.bind({ instance: this.instance, entityId: entityId }));
-                  $(svgElement).on('touchstart', this.instance.onEntityClick.bind({ instance: this.instance, entityId: entityId }));
+                  $(svgElement).on('click touchstart', this.instance.onEntityClick.bind({ instance: this.instance, entityId: entityId }));
                   $(svgElement).css('cursor', 'pointer');
                   $(svgElement).addClass('ha-entity');
 
@@ -562,8 +565,7 @@
             .attr('y', bbox.y);
 
           $(embeddedSvg).find('*').append(document.createElementNS('http://www.w3.org/2000/svg', 'title'))
-            .on('click', this.onEntityClick.bind({ instance: this, entityId: entityId }))
-            .on('touchstart', this.onEntityClick.bind({ instance: this, entityId: entityId }))
+            .on('click touchstart', this.onEntityClick.bind({ instance: this, entityId: entityId }))
             .css('cursor', 'pointer')
             .addClass('ha-entity');
 
@@ -768,10 +770,16 @@
             data = JSON.parse(result);
           }
 
-          if (!data.entity_id)
+          if (!data.entity_id) {
             data['entity_id'] = entityId;
+          }
 
-          this.instance.hass.callService(domain, action.service, data);
+          let proceed = this.instance.lockItUp();
+          if (proceed) {
+            this.instance.hass.callService(domain, action.service, data);
+            window.setTimeout(function() {
+            }.bind(this), 250);
+          }
         }
         else {
           this.instance.fire('hass-more-info', { entityId: entityId });
@@ -779,6 +787,15 @@
       }
       else {
         this.instance.fire('hass-more-info', { entityId: entityId });
+      }
+    },
+
+    lockItUp() {
+      if (!this.isBlockingClicks) {
+        this.isBlockingClicks = true;
+        return true;
+      } else {
+        return false;
       }
     },
 
