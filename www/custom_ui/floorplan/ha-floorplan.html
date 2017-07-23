@@ -8,6 +8,9 @@
 <script src="lib//moment.min.js"></script>
 <script src="lib/svg-pan-zoom.min.js"></script>
 
+<!-- as documented here for chrome, removes the need for touchstart -->
+<meta name="viewport" content="width=device-width">
+
 <dom-module id="ha-floorplan">
 
   <template>
@@ -233,7 +236,6 @@
 
               if (svgElement.length) {
                 $(svgElement).on('click', this.instance.onElementClick.bind({ instance: this.instance, elementId: elementId }));
-                $(svgElement).on('touchstart', this.instance.onElementClick.bind({ instance: this.instance, elementId: elementId }));
                 $(svgElement).css('cursor', 'pointer');
 
                 let elementConfig = {
