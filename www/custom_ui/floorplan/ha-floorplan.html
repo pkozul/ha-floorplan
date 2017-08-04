@@ -742,21 +742,22 @@
                     }
                   }
                   break;
-                default:
-                  domain = action.domain
-                  let data = {};
-                  if (action.data) {
-                    data = action.data;
-                  }
-                  if (action.data_template) {
-                    let entities = this.instance.hass.states;
-                    let entityState = entities[entityId];
-                    let result = this.instance.assemble(action.data_template, entityState, entities);
-                    data = JSON.parse(result);
-                  }
-                  this.instance.hass.callService(domain, action.service, data);
-				  break;
               }
+
+            default:
+              domain = action.domain
+              let data = {};
+              if (action.data) {
+                data = action.data;
+              }
+              if (action.data_template) {
+                let entities = this.instance.hass.states;
+                let entityState = entities[entityId];
+                let result = this.instance.assemble(action.data_template, entityState, entities);
+                data = JSON.parse(result);
+              }
+              this.instance.hass.callService(domain, action.service, data);
+              break;
           }
         }
       }
