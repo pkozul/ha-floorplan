@@ -73,7 +73,7 @@ Then, add the following to get Home Assistant to display this new virtual entity
 homeassistant:
   customize:    
     binary_sensor.floorplan:
-      custom_ui_state_card: floorplan
+      custom_ui_state_card: state-card-floorplan
       config: !include floorplan.yaml
 ```
 
