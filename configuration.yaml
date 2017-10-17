@@ -1,5 +1,6 @@
 homeassistant:
   customize: !include customize.yaml
 
+frontend: !include frontend.html
 panel_custom: !include panel_custom.yaml
 binary_sensor: !include binary_sensors.yaml
