@@ -253,9 +253,11 @@
 
                 this.instance.elementConfigs[elementId] = elementConfig;
 
-                for (let otherElementId of elementGroup.action.data.elements) {
-                  let otherSvgElement = $(svg).find(`[id="${otherElementId}"]`);
-                  $(otherSvgElement).addClass(elementGroup.action.data.default_class);
+                if (elementGroup.action.data.elements) {
+                  for (let otherElementId of elementGroup.action.data.elements) {
+                    let otherSvgElement = $(svg).find(`[id="${otherElementId}"]`);
+                    $(otherSvgElement).addClass(elementGroup.action.data.default_class);
+                  }
                 }
               }
               else {
@@ -741,6 +743,22 @@
                   }
                   break;
               }
+              break;
+
+            default:
+              domain = action.domain
+              let data = {};
+              if (action.data) {
+                data = action.data;
+              }
+              if (action.data_template) {
+                let entities = this.instance.hass.states;
+                let entityState = entities[entityId];
+                let result = this.instance.assemble(action.data_template, entityState, entities);
+                data = JSON.parse(result);
+              }
+              this.instance.hass.callService(domain, action.service, data);
+              break;
           }
         }
       }
