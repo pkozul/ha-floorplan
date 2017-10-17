@@ -195,6 +195,7 @@
 
       this.loadStyleSheet(this.config.stylesheet + '?cacheBuster=' + (new Date().getTime()), function (success, link) {
         if (success) {
+          Polymer.dom(this.instance.root).appendChild(link);
           let styleSheet = link['sheet'];
           this.instance.cssRules = this.instance.getArray(styleSheet.cssRules);
           callback();
@@ -731,10 +732,7 @@
 
             default:
               domain = action.domain
-              let data = {};
-              if (action.data) {
-                data = action.data;
-              }
+              let data = action.data ? action.data : {};
               if (action.data_template) {
                 let entities = this.instance.hass.states;
                 let entityState = entities[entityId];
