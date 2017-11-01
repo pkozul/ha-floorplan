@@ -58,6 +58,14 @@ To display the floorplan as a custom state card, copy the following file from th
 www/custom_ui/state-card-floorplan.html
 ```
 
+To allow the above file to be served by Home Assistant, add it to the `frontend` section of your Home Assistant configuration:
+
+```
+frontend:
+  extra_html_url:
+    - /local/custom_ui/state-card-floorplan.html
+```
+
 Since Home Assistant requires a single entity to be used as the target for a state card, create a virtual entity to represent the overall floorplan. You can choose any type of entity for this, such as the MQTT binary sensor. Add the following to your Home Assistant configuration:
 
 ```
