@@ -18,9 +18,6 @@ I've set the size of my floorplan-file to match the resolution of a full-screen 
 - Set view box x, y, width and height to: 0, 0, 1024, 768.
 - Close the document properties and save the file as floorplan.svg
 
-![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/workearea_size.PNG)
-
-
 ## 1.2 Draw your building
 Start drawing your house/apartment using rectangles. Add two placeholders for lights using the circle tool (or download and insert more classy looking ones from the Noun Project). Also add a text string that we will be using for showing the temperature. These steps have been taken in the image below.
 
