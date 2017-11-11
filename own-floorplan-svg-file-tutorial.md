@@ -9,6 +9,8 @@ Recommended resources:
 ## 1. Get started
 Download, install and open [Inkscape](https://inkscape.org/en/).
 
+_(Note: Inkscape runs on [XQuartz](http://xquartz.macosforge.org/).  If you are running OSX and you do not yet have this installed, you will need it. **There is a bug that affects Inkscape in dual monitor environments**  If your displays are side by side with the primary display on the left, you should be ok.  If you stack your monitors on top of each other, Inkscape will be running, but you won't see the window as it will be positioned off-screen.  Adjust your display position settings so the primary display is on the left and you'll see the Inkscape window.  There is an app called [Stay](https://cordlessdog.com/stay/) that will record and store various display layouts that you can quickly switch between.)_
+
 ## 1.1 Set the size of the work area
 I've set the size of my floorplan-file to match the resolution of a full-screen iPad Air (1024x768).
 - Click File > Document Properties
