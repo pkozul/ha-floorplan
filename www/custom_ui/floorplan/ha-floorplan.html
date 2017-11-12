@@ -332,9 +332,11 @@
                 if (svgElement.length) {
                   svgElementConfig.svgElement = svgElement[0];
 
-                  $(svgElement).on('click', this.instance.onEntityClick.bind({ instance: this.instance, entityId: entityId }));
-                  $(svgElement).css('cursor', 'pointer');
-                  $(svgElement).addClass('ha-entity');
+                  if (entityConfig.group.action !== false) {
+                    $(svgElement).on('click', this.instance.onEntityClick.bind({ instance: this.instance, entityId: entityId }));
+                    $(svgElement).css('cursor', 'pointer');
+                    $(svgElement).addClass('ha-entity');
+                  }
 
                   if ((svgElement[0].nodeName === 'text') && (svgElement[0].id === entityId)) {
                     let boundingBox = svgElement[0].getBBox();
@@ -390,7 +392,7 @@
           if (!svgElement)
             continue;
 
-          this.setHoverOverText(svgElement, entityState);
+          this.setHoverOverText(svgElement, entityState, entityConfig);
 
           if (svgElement.nodeName === 'text') {
             let text = entityConfig.group.text_template ?
@@ -450,12 +452,12 @@
             if (entityConfig.imageUrl !== imageUrl) {
               entityConfig.imageUrl = imageUrl;
               this.loadImage(imageUrl, entityId, entityState, (embeddedSvg, entityState) => {
-                this.setHoverOverText(embeddedSvg, entityState);
+                this.setHoverOverText(embeddedSvg, entityState, entityConfig);
               });
             }
 
             let embeddedSvg = $(svg).find(`[id="image.${entityId}"]`)[0];
-            this.setHoverOverText(embeddedSvg, entityState);
+            this.setHoverOverText(embeddedSvg, entityState, entityConfig);
           }
 
           let targetClass = undefined;
@@ -518,16 +520,18 @@
       }
     },
 
-    setHoverOverText(element, entityState) {
-      let title = $(element).find('title');
-      if (title.length) {
-        let dateFormat = this.config.date_format ? this.config.date_format : 'DD-MMM-YYYY';
-        let titleText = entityState.attributes.friendly_name + '\n' +
-          'State: ' + entityState.state + '\n' +
-          'Last changed date: ' + moment(entityState.last_changed).format(dateFormat) + '\n' +
-          'Last changed time: ' + moment(entityState.last_changed).format('HH:mm:ss');
+    setHoverOverText(element, entityState, entityConfig) {
+      if (entityConfig.group.action !== false) {
+        let title = $(element).find('title');
+        if (title.length) {
+          let dateFormat = this.config.date_format ? this.config.date_format : 'DD-MMM-YYYY';
+          let titleText = entityState.attributes.friendly_name + '\n' +
+            'State: ' + entityState.state + '\n' +
+            'Last changed date: ' + moment(entityState.last_changed).format(dateFormat) + '\n' +
+            'Last changed time: ' + moment(entityState.last_changed).format('HH:mm:ss');
 
-        $(title).html(titleText);
+          $(title).html(titleText);
+        }
       }
     },
 
