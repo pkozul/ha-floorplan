@@ -2,7 +2,7 @@
 
 svg, svg * {
   vector-effect: non-scaling-stroke !important;
-  pointer-events: all !important;
+  pointer-events: auto !important;
 }
 
 /* Hover over */
