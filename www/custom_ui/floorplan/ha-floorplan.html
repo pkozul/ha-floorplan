@@ -7,6 +7,7 @@
 <script src="lib/jquery-3.2.1.min.js"></script>
 <script src="lib//moment.min.js"></script>
 <script src="lib/svg-pan-zoom.min.js"></script>
+<script src="lib/custom_js.js"></script>
 
 <!-- As documented here for chrome, removes the need for touchstart -->
 <meta name="viewport" content="width=device-width">
@@ -162,6 +163,7 @@
         this.loadFloorPlan(() => {
           this.isLoading = false;
           this.handleEntities(this.hass.states);
+          $(document).trigger( "floorplan:loaded", [this, svg]);
         });
       });
 
