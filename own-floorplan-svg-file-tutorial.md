@@ -18,13 +18,13 @@ I've set the size of my floorplan-file to match the resolution of a full-screen 
 - Set view box x, y, width and height to: 0, 0, 1024, 768.
 - Close the document properties and save the file as floorplan.svg
 
-![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/workearea_size.PNG)
+![floorplan](https://github.com/pkozul/ha-floorplan/blob/master/tutorial_images/workearea_size.PNG)
 
 
 ## 1.2 Draw your building
 Start drawing your house/apartment using rectangles. Add two placeholders for lights using the circle tool (or download and insert more classy looking ones from the Noun Project). Also add a text string that we will be using for showing the temperature. These steps have been taken in the image below.
 
-![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/simple_plan.PNG)
+![floorplan](https://github.com/pkozul/ha-floorplan/blob/master/tutorial_images/simple_plan.PNG)
 
 ## 1.3 Link the items to entities in Home Assistant
 To link an object in the floorplan-file to Home Assistant, you first set its object id to the name of the entity in Home Assistant. There are two lights: ```light.hall_1``` and ```light.hall_2``` as well as a temperature sensor ```sensor.forecastio_apparent_temperature```.
@@ -33,7 +33,7 @@ To link an object in the floorplan-file to Home Assistant, you first set its obj
 - Click outside of the circle and click inside it again and make sure Inkscape hasn't added "_" to the end of the ID.
 - Do the same for the other light and also with the text.
 
-![floorplan](https://github.com/ggravlingen/ha-floorplan/blob/master/tutorial_images/object_properties.PNG)
+![floorplan](https://github.com/pkozul/ha-floorplan/blob/master/tutorial_images/object_properties.PNG)
 
 ## 1.4 Add the necessary config to your floorplan.yaml-file
 Add the following lines to your floorplan.yaml file:
