@@ -4,7 +4,13 @@
 
   <template>
     <style include="ha-style">
-      .container {
+      .container-fullscreen {
+        height: calc(100%);
+        vertical-align: top;
+        position: relative;
+      }
+
+      .container-with-toolbar {
         height: calc(100% - 64px);
         vertical-align: top;
         position: relative;
@@ -20,8 +26,8 @@
       <div main-title>[[panel.title]]</div>
     </app-toolbar>
 
-    <div class="container">
-      <ha-floorplan hass=[[hass]] config=[[panel.config]] is-panel></ha-floorplan>
+    <div class$='[[containerClass]]'>
+      <ha-floorplan hass=[[hass]] _config=[[panel.config]] is-panel></ha-floorplan>
     </div>
   </template>
 
@@ -50,13 +56,17 @@
       panel: {
         type: Object,
         observer: 'panelChanged',
+      },
+      containerClass: {
+        type: String,
+        value: 'container-fullscreen',
       }
     },
 
     panelChanged: function() {
-      var hideAppToolbar = ((this.panel.config.hide_app_toolbar === null) ||
-        (this.panel.config.hide_app_toolbar !== undefined));
+      var hideAppToolbar = ((this.panel.config.hide_app_toolbar === null) || (this.panel.config.hide_app_toolbar !== undefined));
       this.showAppToolbar = !hideAppToolbar;
+      this.containerClass = this.showAppToolbar ? 'container-with-toolbar' : 'container-fullscreen';
     },
 
   });
