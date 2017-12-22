@@ -465,6 +465,11 @@
             targetClass = this.assemble(entityConfig.group.class_template, entityState, entities);
           }
 
+           if (entityConfig.group.style_template && svgElement.id === entityId) {
+            let targetStyle = this.assemble(entityConfig.group.style_template, entityState, entities);
+            $(svgElement).attr('style', targetStyle);
+          }
+
           let originalClasses = this.getArray(svgElementConfig.clonedsvgElement.classList);
 
           // Get the config for the current state
@@ -473,6 +478,11 @@
             if (stateConfig && stateConfig.class && !wasTransitionHandled) {
               targetClass = stateConfig.class;
             }
+            
+             if (stateConfig && stateConfig.style_template && !wasTransitionHandled && svgElement.id === entityId) {                    
+              let targetStyle =  this.assemble(stateConfig.style_template, entityState, entities);
+              $(svgElement).attr('style', targetStyle);
+            }          
 
             // Remove any other previously-added state classes
             for (let otherStateConfig of entityConfig.group.states) {
