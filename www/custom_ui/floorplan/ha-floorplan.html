@@ -7,6 +7,7 @@
 <script src="lib/jquery-3.2.1.min.js"></script>
 <script src="lib//moment.min.js"></script>
 <script src="lib/svg-pan-zoom.min.js"></script>
+<script src="lib/hammer.min.js"></script>
 
 <!-- As documented here for chrome, removes the need for touchstart -->
 <meta name="viewport" content="width=device-width">
@@ -362,6 +363,52 @@
               controlIconsEnabled: true,
               fit: true,
               center: true,
+              customEventsHandler: {
+                haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
+                , init: function (options) {
+                  var instance = options.instance
+                    , initialScale = 1
+                    , pannedX = 0
+                    , pannedY = 0
+
+                  this.hammer = Hammer(options.svgElement, {
+                    inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+                  })
+
+                  this.hammer.get('pinch').set({ enable: true })
+
+                  this.hammer.on('doubletap', function (ev) {
+                    instance.zoomIn()
+                  })
+
+                  this.hammer.on('panstart panmove', function (ev) {
+                    if (ev.type === 'panstart') {
+                      pannedX = 0
+                      pannedY = 0
+                    }
+
+                    instance.panBy({ x: ev.deltaX - pannedX, y: ev.deltaY - pannedY })
+                    pannedX = ev.deltaX
+                    pannedY = ev.deltaY
+                  })
+
+                  this.hammer.on('pinchstart pinchmove', function (ev) {
+                    if (ev.type === 'pinchstart') {
+                      initialScale = instance.getZoom()
+                      instance.zoom(initialScale * ev.scale)
+                    }
+
+                    instance.zoom(initialScale * ev.scale)
+
+                  })
+
+                  options.svgElement.addEventListener('touchmove', function (e) { e.preventDefault(); });
+                }
+
+                , destroy: function () {
+                  this.hammer.destroy()
+                }
+              }
             });
           }
 
