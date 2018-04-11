@@ -7,6 +7,7 @@
 <script src="lib/jquery-3.2.1.min.js"></script>
 <script src="lib//moment.min.js"></script>
 <script src="lib/svg-pan-zoom.min.js"></script>
+<script src="lib/jquery.longclick-1.0.js"></script>
 
 <!-- As documented here for chrome, removes the need for touchstart -->
 <meta name="viewport" content="width=device-width">
@@ -111,6 +112,10 @@
         type: Array,
         value: () => { return []; },
       },
+      longConfigs: {
+        type: Array,
+        value: () => { return []; },
+      },
       cssRules: {
         type: Array,
         value: () => { return []; },
@@ -126,6 +131,7 @@
     },
 
     onAttached() {
+      if(Polymer.dom(this.$.floorplan).node.children.length > 0) return;
       window.onerror = this.handleWindowError.bind(this);
 
       if (!this.config.groups) {
@@ -141,10 +147,10 @@
         return;
       }
 
-      invalidGroups = this.config.groups.filter(x => !x.entities && !x.elements);
+      invalidGroups = this.config.groups.filter(x => !x.entities && !x.elements && !x.longs);
       if (invalidGroups.length) {
         this.isLoading = false;
-        this.warn(`A group must contain either 'entities' or 'elements' in floorplan configuration`);
+        this.warn(`A group must contain either 'entities', 'elements', or 'longs' in floorplan configuration`);
         return;
       }
 
@@ -222,7 +228,35 @@
           let uniqueId = (new Date()).getTime();
 
           let svgElements = $(svg).find('*').toArray();
+          
+          let longGroups = this.instance.config.groups.filter(x => x.longs);
+          for (let longGroup of longGroups) {
+            for (let longId of longGroup.longs) {
+              let svgElement = $(svg).find(`[id="${longId}"]`);
 
+              if (svgElement.length) {
+                $(svgElement).mayTriggerLongClicks().on('longClick', this.instance.onLongClick.bind({ instance: this.instance, longId: longId }));
+                $(svgElement).css('cursor', 'pointer');
+
+                let longConfig = {
+                  group: longGroup,
+                };
+
+                this.instance.longConfigs[longId] = longConfig;
+
+                if (longGroup.action.data.elements) {
+                  for (let otherElementId of longGroup.action.data.elements) {
+                    let otherSvgElement = $(svg).find(`[id="${otherElementId}"]`);
+                    $(otherSvgElement).addClass(longGroup.action.data.default_class);
+                  }
+                }
+              }
+              else {
+                this.instance.warn(`Cannot find '${longId}' in SVG file`);
+              }
+            }
+          }
+          
           let elementGroups = this.instance.config.groups.filter(x => x.elements);
           for (let elementGroup of elementGroups) {
             for (let elementId of elementGroup.elements) {
@@ -696,6 +730,57 @@
       }
     },
 
+    onLongClick(e) {
+      let svgElement = e.target;
+
+      let longConfig = this.instance.longConfigs[this.longId];
+      if (longConfig.group.action) {
+        let action = longConfig.group.action;
+        if (action.service) {
+          switch (action.domain) {
+            case 'class':
+
+              switch (action.service) {
+                case 'toggle':
+                  let svg = Polymer.dom(this.instance.$.floorplan).querySelector('svg');
+                  let classes = action.data.classes;
+
+                  for (let otherElementId of action.data.elements) {
+                    let otherSvgElement = $(svg).find(`[id="${otherElementId}"]`);
+
+                    if ($(otherSvgElement).hasClass(classes[0])) {
+                      $(otherSvgElement).removeClass(classes[0]);
+                      $(otherSvgElement).addClass(classes[1]);
+                    }
+                    else if ($(otherSvgElement).hasClass(classes[1])) {
+                      $(otherSvgElement).removeClass(classes[1]);
+                      $(otherSvgElement).addClass(classes[0]);
+                    }
+                    else {
+                      $(otherSvgElement).addClass(action.data.default_class);
+                    }
+                  }
+                  break;
+              }
+              break;
+
+            default:
+              domain = action.domain
+              let data = action.data ? action.data : {};
+              if (action.data_template) {
+                let entities = this.instance.hass.states;
+                let entityState = entities[entityId];
+                let result = this.instance.assemble(action.data_template, entityState, entities);
+                data = JSON.parse(result);
+              }
+              this.instance.hass.callService(domain, action.service, data);
+              break;
+          }
+        }
+      }
+    },
+
+    
     onElementClick(e) {
       let svgElement = e.target;
 
