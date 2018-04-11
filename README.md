@@ -14,7 +14,7 @@ With Floorplan for Home Assistant, you can:
 - Gradually transition between states using color gradients
 - Display the last triggered binary sensor using CSS
 - Display hover-over text for each entity
-- Call a service or display a popup dialog when an entity is clicked
+- Call a service or display a popup dialog when an entity is clicked or long-clicked
 
 Despite its title, Floorplan for Home Assistant can be used as a general purpose user interface for just about anything you want to present in a visual way.
 
@@ -37,6 +37,7 @@ www/custom_ui/floorplan/floorplan.css
 www/custom_ui/floorplan/lib/jquery-3.2.1.min.js
 www/custom_ui/floorplan/lib/moment.min.js
 www/custom_ui/floorplan/lib/svg-pan-zoom.min.js
+www/custom_ui/floorplan/lib/jquery.longclick-1.0.js
 ```
 
 Although a sample floorplan SVG file is included in this repo, you will want to create your own. See the [appendix](#creating-a-floorplan-svg-file) for more information.
@@ -402,6 +403,26 @@ If you'd like to control the visibility of your entities, you can create a layer
                 - layer-hidden
               default_class: layer-hidden
 ```
+
+To toggle the visibility of an entitiy using a long press instead of a single click, you can use the option `longs:` instead of `elements:`. Note that within the `data:` section, `elements:` is still used. Below is an example where button `media_players_button` toggles visibility based on a long press rather than just a click. This can be combined with the above code to create two different actions from the same svg element- one for a short press and one for a long press.
+
+```
+        - name: Media Players
+          longs:
+            - media_players_button
+          action:
+            domain: class
+            service: toggle
+            data:
+              elements:
+                - media_players_layer
+              classes:
+                - layer-visible
+                - layer-hidden
+              default_class: layer-hidden
+```
+
+
 
 ## Appendix
 
