@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.6
+  Version: 1.0.7
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -60,7 +60,7 @@
       <ul></ul>
     </div>
 
-    <div id="floorplan" on-tap="stopPropagation"></div>
+    <div id="floorplan" on-tap="stopPropagation" on-click="stopPropagation"></div>
 
   </template>
 
@@ -228,7 +228,7 @@
           let uniqueId = (new Date()).getTime();
 
           let svgElements = $(svg).find('*').toArray();
-          
+
           let longGroups = this.instance.config.groups.filter(x => x.longs);
           for (let longGroup of longGroups) {
             for (let longId of longGroup.longs) {
@@ -256,7 +256,7 @@
               }
             }
           }
-          
+
           let elementGroups = this.instance.config.groups.filter(x => x.elements);
           for (let elementGroup of elementGroups) {
             for (let elementId of elementGroup.elements) {
@@ -780,7 +780,6 @@
       }
     },
 
-    
     onElementClick(e) {
       let svgElement = e.target;
 
