@@ -753,7 +753,7 @@
       if (entityConfig.group.action) {
         let action = entityConfig.group.action;
         if (action.service) {
-          let domain = action.domain ? action.domain : window.HAWS.extractDomain(entityId);
+          let domain = action.domain ? action.domain : entityId.substr(0, entityId.indexOf('.'));
           domain = (domain == 'group') ? 'homeassistant' : domain;
 
           let data = {};
