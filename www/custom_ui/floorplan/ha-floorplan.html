@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.6
+  Version: 1.0.7
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -195,10 +195,12 @@
 
       this.loadStyleSheet(this.config.stylesheet + '?cacheBuster=' + (new Date().getTime()), function (success, link) {
         if (success) {
-          Polymer.dom(this.instance.root).appendChild(link);
+          this.instance.root.appendChild(link);
           let styleSheet = link['sheet'];
-          this.instance.cssRules = this.instance.getArray(styleSheet.cssRules);
-          callback();
+          setTimeout(() => {
+            this.instance.cssRules = this.instance.getArray(styleSheet.cssRules);
+            callback();
+          }, 1000);
         }
         else {
           this.instance.error("Error loading stylesheet");
@@ -217,7 +219,7 @@
           $(svg).css('position', this.instance.isPanel ? 'absolute' : 'relative');
           $(svg).css('cursor', 'default');
 
-          Polymer.dom(this.instance.$.floorplan).node.appendChild(svg);
+          this.instance.$.floorplan.appendChild(svg);
 
           let uniqueId = (new Date()).getTime();
 
@@ -372,7 +374,7 @@
     },
 
     handleEntities(entities) {
-      let svg = Polymer.dom(this.$.floorplan).querySelector('svg');
+      let svg = this.$.floorplan.querySelector('svg');
 
       for (let entityId in entities) {
         let entityState = entities[entityId];
@@ -532,7 +534,7 @@
     },
 
     loadImage(imageUrl, entityId, entityState, callback) {
-      let svg = Polymer.dom(this.$.floorplan).querySelector('svg');
+      let svg = this.$.floorplan.querySelector('svg');
       jQuery.ajax({
         url: imageUrl, // allow the browser cache to be used
         success: function (result) {
@@ -611,7 +613,7 @@
       if (!this.cssRules || !this.cssRules.length)
         return;
 
-      let svg = Polymer.dom(this.$.floorplan).querySelector('svg');
+      let svg = this.$.floorplan.querySelector('svg');
 
       for (let entityId in this.entityConfigs) {
         let entityConfig = this.entityConfigs[entityId];
@@ -708,7 +710,7 @@
 
               switch (action.service) {
                 case 'toggle':
-                  let svg = Polymer.dom(this.instance.$.floorplan).querySelector('svg');
+                  let svg = this.instance.$.floorplan.querySelector('svg');
                   let classes = action.data.classes;
 
                   for (let otherElementId of action.data.elements) {
@@ -856,21 +858,21 @@
     },
 
     error(message) {
-      let errors = Polymer.dom(this.$.errors).node;
+      let errors = this.$.errors;
       $(errors).find('ul').append(`<li>${message}</li>`)
       $(errors).css('display', 'block');
     },
 
     warn(message) {
       if ((this.config.warnings === null) || (this.config.warnings !== undefined)) {
-        let warnings = Polymer.dom(this.$.warnings).node;
+        let warnings = this.$.warnings;
         $(warnings).find('ul').append(`<li>${message}</li>`)
         $(warnings).css('display', 'block');
       }
     },
 
     debug(message) {
-      let debug = Polymer.dom(this.$.debug).node;
+      let debug = this.$.debug;
       $(debug).find('ul').append(`<li>${message}</li>`)
       $(debug).css('display', 'block');
     },
