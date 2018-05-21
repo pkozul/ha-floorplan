@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.7
+  Version: 1.0.8
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -944,6 +944,20 @@
         Math.round(color1.b * w1 + color2.b * w2)
       ];
       return rgb;
+    },
+
+    fire(type, detail, options) {
+      options = options || {};
+      detail = (detail === null || detail === undefined) ? {} : detail;
+      const event = new Event(type, {
+        bubbles: options.bubbles === undefined ? true : options.bubbles,
+        cancelable: Boolean(options.cancelable),
+        composed: options.composed === undefined ? true : options.composed
+      });
+      event.detail = detail;
+      const node = options.node || this;
+      node.dispatchEvent(event);
+      return event;
     }
   });
 
