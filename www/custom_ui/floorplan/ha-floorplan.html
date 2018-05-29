@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.11
+  Version: 1.0.12
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -446,7 +446,7 @@
           }
 
           if (entityConfig.group.image_template) {
-            imageUrl = this.assemble(entityConfig.group.image_template, entityState, entities);
+            let imageUrl = this.assemble(entityConfig.group.image_template, entityState, entities);
             if (entityConfig.imageUrl !== imageUrl) {
               entityConfig.imageUrl = imageUrl;
               this.loadImage(imageUrl, entityId, entityState, (embeddedSvg, entityState) => {
