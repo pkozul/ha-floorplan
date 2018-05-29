@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.10
+  Version: 1.0.11
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -590,7 +590,7 @@
     }
 
     removeClasses(entityId, svgElement, classes) {
-      for (className of classes) {
+      for (let className of classes) {
         //console.log(`${entityId}: removing class "${className}" (${svgElement.id})`);
         if ($(svgElement).hasClass(className)) {
           $(svgElement).removeClass(className);
