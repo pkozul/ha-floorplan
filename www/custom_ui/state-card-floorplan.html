@@ -1,4 +1,4 @@
-<link rel="import" href="floorplan/ha-floorplan.html" async>
+<link rel="import" href="floorplan/ha-floorplan.html">
 
 <dom-module id="state-card-floorplan">
 
@@ -8,17 +8,23 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'state-card-floorplan',
 
-    properties: {
-      hass: {
-        type: Object,
+class StateCardFloorplan extends Polymer.Element {
+  static get is() { return 'state-card-floorplan'; }
+
+  static get properties() {
+    return {
+      hass: Object,
+
+      inDialog: {
+        type: Boolean,
+        value: false,
       },
-      stateObj: {
-        type: Object,
-      },
-    },
-  });
+
+      stateObj: Object,
+    };
+  }
+}
+customElements.define(StateCardFloorplan.is, StateCardFloorplan);
 
 </script>
