@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.9
+  Version: 1.0.10
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -697,6 +697,8 @@
     }
 
     onElementClick(e) {
+      e.stopPropagation();
+
       let svgElement = e.target;
 
       let elementConfig = this.instance.elementConfigs[this.elementId];
@@ -747,6 +749,8 @@
     }
 
     onEntityClick(e) {
+      e.stopPropagation();
+
       let entityId = this.entityId;
 
       let entityConfig = this.instance.entityConfigs[entityId];
