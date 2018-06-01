@@ -1,6 +1,6 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.12
+  Version: 1.0.13
   https://github.com/pkozul/ha-floorplan
 -->
 
@@ -11,7 +11,7 @@
 <!-- As documented here for chrome, removes the need for touchstart -->
 <meta name="viewport" content="width=device-width">
 
-<dom-module id="ha-floorplan">
+<dom-module id="ha-floorplan_v1">
 
   <template>
     <style>
@@ -67,52 +67,59 @@
 
 <script>
 
-  class HaFloorplan extends Polymer.Element {
-    static get is() { return 'ha-floorplan'; }
+  class HaFloorplan_v1 extends Polymer.Element {
+    static get is() { return 'ha-floorplan_v1'; }
 
     static get properties() {
       return {
-      hass: {
-        type: Object,
-        observer: 'hassChanged'
-      },
-      inDialog: {
-        type: Boolean,
-        value: false,
-      },
-      isPanel: {
-        type: Boolean,
-        value: false,
-      },
-      config: {
-        type: Object,
-      },
-      isLoading: {
-        type: Boolean,
-        value: true,
-      },
-      timeDifference: {
-        type: Number,
-        value: undefined,
-      },
-      entityConfigs: {
-        type: Array,
-        value: () => { return []; },
-      },
-      elementConfigs: {
-        type: Array,
-        value: () => { return []; },
-      },
-      cssRules: {
-        type: Array,
-        value: () => { return []; },
-      },
+        hass: {
+          type: Object,
+          observer: 'hassChanged'
+        },
+        inDialog: {
+          type: Boolean,
+          value: false,
+        },
+        isPanel: {
+          type: Boolean,
+          value: false,
+        },
+        config: {
+          type: Object,
+        },
+        isLoading: {
+          type: Boolean,
+          value: true,
+        },
+        timeDifference: {
+          type: Number,
+          value: undefined,
+        },
+        entityConfigs: {
+          type: Array,
+          value: () => { return []; },
+        },
+        elementConfigs: {
+          type: Array,
+          value: () => { return []; },
+        },
+        cssRules: {
+          type: Array,
+          value: () => { return []; },
+        },
+        isInitialized: {
+          type: Boolean,
+          value: false,
+        },
       };
     }
 
     connectedCallback() {
       super.connectedCallback();
-      this.onConnected();
+
+      if (!this.isInitialized) {
+        this.initFloorplan();
+      }
     }
 
     stopPropagation(e) {
@@ -123,7 +130,9 @@
       this.handleEntities(newHass.states);
     }
 
-    onConnected() {
+    initFloorplan() {
+      this.isInitialized = true;
+
       window.onerror = this.handleWindowError.bind(this);
 
       if (!this.config.groups) {
@@ -962,6 +971,6 @@
       return event;
     }
   }
-  customElements.define(HaFloorplan.is, HaFloorplan);
+  customElements.define(HaFloorplan_v1.is, HaFloorplan_v1);
 
 </script>
