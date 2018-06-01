@@ -11,7 +11,7 @@
 <!-- As documented here for chrome, removes the need for touchstart -->
 <meta name="viewport" content="width=device-width">
 
-<dom-module id="ha-floorplan_v1">
+<dom-module id="ha-floorplan">
 
   <template>
     <style>
@@ -67,8 +67,8 @@
 
 <script>
 
-  class HaFloorplan_v1 extends Polymer.Element {
-    static get is() { return 'ha-floorplan_v1'; }
+  class HaFloorplan extends Polymer.Element {
+    static get is() { return 'ha-floorplan'; }
 
     static get properties() {
       return {
@@ -971,6 +971,6 @@
       return event;
     }
   }
-  customElements.define(HaFloorplan_v1.is, HaFloorplan_v1);
+  customElements.define(HaFloorplan.is, HaFloorplan);
 
 </script>
