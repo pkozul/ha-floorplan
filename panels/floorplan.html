@@ -34,41 +34,44 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'ha-panel-floorplan',
+  class HaPanelFloorplan extends Polymer.Element {
+    static get is() { return 'ha-panel-floorplan'; }
 
-    properties: {
-      hass: {
-        type: Object,
-      },
-      narrow: {
-        type: Boolean,
-        value: false,
-      },
-      showMenu: {
-        type: Boolean,
-        value: true,
-      },
-      showAppToolbar: {
-        type: Boolean,
-        value: false,
-      },
-      panel: {
-        type: Object,
-        observer: 'panelChanged',
-      },
-      containerClass: {
-        type: String,
-        value: 'container-fullscreen',
-      }
-    },
+    static get properties() {
+      return {
+        hass: {
+          type: Object,
+        },
+        narrow: {
+          type: Boolean,
+          value: false,
+        },
+        showMenu: {
+          type: Boolean,
+          value: true,
+        },
+        showAppToolbar: {
+          type: Boolean,
+          value: false,
+        },
+        panel: {
+          type: Object,
+          observer: 'panelChanged',
+        },
+        containerClass: {
+          type: String,
+          value: 'container-fullscreen',
+        },
+      };
+    }
 
-    panelChanged: function() {
+    panelChanged() {
       var hideAppToolbar = ((this.panel.config.hide_app_toolbar === null) || (this.panel.config.hide_app_toolbar !== undefined));
       this.showAppToolbar = !hideAppToolbar;
       this.containerClass = this.showAppToolbar ? 'container-with-toolbar' : 'container-fullscreen';
-    },
+    }
+  }
 
-  });
+  customElements.define(HaPanelFloorplan.is, HaPanelFloorplan);
 
 </script>

@@ -1,11 +1,11 @@
 <!--
   Floorplan for Home Assistant
-  Version: 1.0.6
+  Version: 1.0.13
   https://github.com/pkozul/ha-floorplan
 -->
 
 <script src="lib/jquery-3.2.1.min.js"></script>
-<script src="lib//moment.min.js"></script>
+<script src="lib/moment.min.js"></script>
 <script src="lib/svg-pan-zoom.min.js"></script>
 <script src="lib/hammer.min.js"></script>
 
@@ -67,66 +67,73 @@
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'ha-floorplan',
 
-    ready() {
-    },
+  class HaFloorplan extends Polymer.Element {
+    static get is() { return 'ha-floorplan'; }
 
-    attached() {
-      this.onAttached();
-    },
+    static get properties() {
+      return {
+        hass: {
+          type: Object,
+          observer: 'hassChanged'
+        },
+        inDialog: {
+          type: Boolean,
+          value: false,
+        },
+        isPanel: {
+          type: Boolean,
+          value: false,
+        },
+        config: {
+          type: Object,
+        },
+        isLoading: {
+          type: Boolean,
+          value: true,
+        },
+        timeDifference: {
+          type: Number,
+          value: undefined,
+        },
+        entityConfigs: {
+          type: Array,
+          value: () => { return []; },
+        },
+        elementConfigs: {
+          type: Array,
+          value: () => { return []; },
+        },
+        cssRules: {
+          type: Array,
+          value: () => { return []; },
+        },
+        isInitialized: {
+          type: Boolean,
+          value: false,
+        },
+      };
+    }
 
-    detached() {
-    },
+    connectedCallback() {
+      super.connectedCallback();
 
-    properties: {
-      hass: {
-        type: Object,
-        observer: 'hassChanged'
-      },
-      inDialog: {
-        type: Boolean,
-        value: false,
-      },
-      isPanel: {
-        type: Boolean,
-        value: false,
-      },
-      config: {
-        type: Object,
-      },
-      isLoading: {
-        type: Boolean,
-        value: true,
-      },
-      timeDifference: {
-        type: Number,
-        value: undefined,
-      },
-      entityConfigs: {
-        type: Array,
-        value: () => { return []; },
-      },
-      elementConfigs: {
-        type: Array,
-        value: () => { return []; },
-      },
-      cssRules: {
-        type: Array,
-        value: () => { return []; },
-      },
-    },
+      if (!this.isInitialized) {
+        this.initFloorplan();
+      }
+    }
 
     stopPropagation(e) {
       e.stopPropagation();
-    },
+    }
 
-    hassChanged: function (newHass, oldHass) {
+    hassChanged(newHass, oldHass) {
       this.handleEntities(newHass.states);
-    },
+    }
 
-    onAttached() {
+    initFloorplan() {
+      this.isInitialized = true;
+
       window.onerror = this.handleWindowError.bind(this);
 
       if (!this.config.groups) {
@@ -169,7 +176,7 @@
       if (this.config.groups.find(entityGroup => entityGroup.state_transitions)) {
         setInterval(this.updateStateTransitions.bind(this), 100);
       }
-    },
+    }
 
     handleWindowError(msg, url, lineNo, columnNo, error) {
       if (msg.toLowerCase().indexOf("script error") >= 0) {
@@ -187,7 +194,7 @@
       }
 
       return false;
-    },
+    }
 
     addExternalCss(callback) {
       if (!this.config.stylesheet) {
@@ -196,16 +203,18 @@
 
       this.loadStyleSheet(this.config.stylesheet + '?cacheBuster=' + (new Date().getTime()), function (success, link) {
         if (success) {
-          Polymer.dom(this.instance.root).appendChild(link);
+          this.instance.root.appendChild(link);
           let styleSheet = link['sheet'];
-          this.instance.cssRules = this.instance.getArray(styleSheet.cssRules);
-          callback();
+          setTimeout(() => {
+            this.instance.cssRules = this.instance.getArray(styleSheet.cssRules);
+            callback();
+          }, 1000);
         }
         else {
           this.instance.error("Error loading stylesheet");
         }
       }.bind({ instance: this, callback: callback }));
-    },
+    }
 
     loadFloorPlan(callback) {
       jQuery.ajax({
@@ -218,7 +227,7 @@
           $(svg).css('position', this.instance.isPanel ? 'absolute' : 'relative');
           $(svg).css('cursor', 'default');
 
-          Polymer.dom(this.instance.$.floorplan).node.appendChild(svg);
+          this.instance.$.floorplan.appendChild(svg);
 
           let uniqueId = (new Date()).getTime();
 
@@ -322,7 +331,7 @@
                 };
               });
 
-              for (svgElementId in entityConfig.svgElementConfigs) {
+              for (let svgElementId in entityConfig.svgElementConfigs) {
                 let svgElementConfig = entityConfig.svgElementConfigs[svgElementId];
 
                 let svgElement = $(svgElementConfig.svgElement);
@@ -416,10 +425,10 @@
 
         }.bind({ instance: this, callback: callback })
       });
-    },
+    }
 
     handleEntities(entities) {
-      let svg = Polymer.dom(this.$.floorplan).querySelector('svg');
+      let svg = this.$.floorplan.querySelector('svg');
 
       for (let entityId in entities) {
         let entityState = entities[entityId];
@@ -493,7 +502,7 @@
           }
 
           if (entityConfig.group.image_template) {
-            imageUrl = this.assemble(entityConfig.group.image_template, entityState, entities);
+            let imageUrl = this.assemble(entityConfig.group.image_template, entityState, entities);
             if (entityConfig.imageUrl !== imageUrl) {
               entityConfig.imageUrl = imageUrl;
               this.loadImage(imageUrl, entityId, entityState, (embeddedSvg, entityState) => {
@@ -563,7 +572,7 @@
           }
         }
       }
-    },
+    }
 
     setHoverOverText(element, entityState) {
       let title = $(element).find('title');
@@ -576,10 +585,10 @@
 
         $(title).html(titleText);
       }
-    },
+    }
 
     loadImage(imageUrl, entityId, entityState, callback) {
-      let svg = Polymer.dom(this.$.floorplan).querySelector('svg');
+      let svg = this.$.floorplan.querySelector('svg');
       jQuery.ajax({
         url: imageUrl, // allow the browser cache to be used
         success: function (result) {
@@ -614,7 +623,7 @@
 
         }.bind(this)
       });
-    },
+    }
 
     addClass(entityId, svgElement, className) {
       if ($(svgElement).hasClass('ha-leave-me-alone')) {
@@ -634,10 +643,10 @@
           }
         }
       }
-    },
+    }
 
     removeClasses(entityId, svgElement, classes) {
-      for (className of classes) {
+      for (let className of classes) {
         //console.log(`${entityId}: removing class "${className}" (${svgElement.id})`);
         if ($(svgElement).hasClass(className)) {
           $(svgElement).removeClass(className);
@@ -652,13 +661,13 @@
           }
         }
       }
-    },
+    }
 
     updateStateTransitions() {
       if (!this.cssRules || !this.cssRules.length)
         return;
 
-      let svg = Polymer.dom(this.$.floorplan).querySelector('svg');
+      let svg = this.$.floorplan.querySelector('svg');
 
       for (let entityId in this.entityConfigs) {
         let entityConfig = this.entityConfigs[entityId];
@@ -710,7 +719,7 @@
           }
         }
       }
-    },
+    }
 
     setEntityStyle(svgElementConfig, svgElement, entityConfig, state) {
       let stateConfig = entityConfig.group.states.find(stateConfig => (stateConfig.state === entityConfig.lastState));
@@ -741,9 +750,11 @@
           }
         }
       }
-    },
+    }
 
     onElementClick(e) {
+      e.stopPropagation();
+
       let svgElement = e.target;
 
       let elementConfig = this.instance.elementConfigs[this.elementId];
@@ -755,7 +766,7 @@
 
               switch (action.service) {
                 case 'toggle':
-                  let svg = Polymer.dom(this.instance.$.floorplan).querySelector('svg');
+                  let svg = this.instance.$.floorplan.querySelector('svg');
                   let classes = action.data.classes;
 
                   for (let otherElementId of action.data.elements) {
@@ -791,16 +802,18 @@
           }
         }
       }
-    },
+    }
 
     onEntityClick(e) {
+      e.stopPropagation();
+
       let entityId = this.entityId;
 
       let entityConfig = this.instance.entityConfigs[entityId];
       if (entityConfig.group.action) {
         let action = entityConfig.group.action;
         if (action.service) {
-          let domain = action.domain ? action.domain : window.HAWS.extractDomain(entityId);
+          let domain = action.domain ? action.domain : entityId.substr(0, entityId.indexOf('.'));
           domain = (domain == 'group') ? 'homeassistant' : domain;
 
           let data = {};
@@ -828,7 +841,7 @@
       else {
         this.instance.fire('hass-more-info', { entityId: entityId });
       }
-    },
+    }
 
     getFill(stateConfig) {
       let fill = undefined;
@@ -848,7 +861,7 @@
       }
 
       return fill;
-    },
+    }
 
     getStroke(stateConfig) {
       let stroke = undefined;
@@ -868,7 +881,7 @@
       }
 
       return stroke;
-    },
+    }
 
     setTransitionFill(svgElement, fromFill, toFill, value) {
       if (value >= 1) {
@@ -881,7 +894,7 @@
         let color = this.rgbToHex(this.mix(this.hexToRgb(toFill), this.hexToRgb(fromFill), value));
         svgElement.style.fill = color;
       }
-    },
+    }
 
     getServerMoment() {
       let serverMoment = moment();
@@ -890,37 +903,37 @@
       else
         serverMoment.add(Math.abs(this.timeDifference), 'milliseconds');
       return serverMoment;
-    },
+    }
 
     getArray(list) {
       return Array.isArray(list) ? list : Object.keys(list).map(key => list[key]);
-    },
+    }
 
     assemble(code, entity, entities) {
       let functionBody = (code.indexOf('return') >= 0) ? code : `return \`${code}\`;`;
       let func = new Function('entity', 'entities', 'hass', 'config', functionBody);
       return func(entity, entities, this.hass, this.config);
-    },
+    }
 
     error(message) {
-      let errors = Polymer.dom(this.$.errors).node;
+      let errors = this.$.errors;
       $(errors).find('ul').append(`<li>${message}</li>`)
       $(errors).css('display', 'block');
-    },
+    }
 
     warn(message) {
       if ((this.config.warnings === null) || (this.config.warnings !== undefined)) {
-        let warnings = Polymer.dom(this.$.warnings).node;
+        let warnings = this.$.warnings;
         $(warnings).find('ul').append(`<li>${message}</li>`)
         $(warnings).css('display', 'block');
       }
-    },
+    }
 
     debug(message) {
-      let debug = Polymer.dom(this.$.debug).node;
+      let debug = this.$.debug;
       $(debug).find('ul').append(`<li>${message}</li>`)
       $(debug).css('display', 'block');
-    },
+    }
 
     loadStyleSheet(path, fn, scope) {
       let head = document.getElementsByTagName('head')[0]; // reference to document.head for appending/ removing link nodes
@@ -957,11 +970,11 @@
       head.appendChild(link);  // insert the link node into the DOM and start loading the style sheet
 
       return link; // return the link node;
-    },
+    }
 
     rgbToHex(rgb) {
       return "#" + ((1 << 24) + (rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16).slice(1);
-    },
+    }
 
     hexToRgb(hex) {
       // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -976,7 +989,7 @@
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
       } : null;
-    },
+    }
 
     mix(color1, color2, weight) {
       let p = weight;
@@ -990,6 +1003,21 @@
       ];
       return rgb;
     }
-  });
+
+    fire(type, detail, options) {
+      options = options || {};
+      detail = (detail === null || detail === undefined) ? {} : detail;
+      const event = new Event(type, {
+        bubbles: options.bubbles === undefined ? true : options.bubbles,
+        cancelable: Boolean(options.cancelable),
+        composed: options.composed === undefined ? true : options.composed
+      });
+      event.detail = detail;
+      const node = options.node || this;
+      node.dispatchEvent(event);
+      return event;
+    }
+  }
+  customElements.define(HaFloorplan.is, HaFloorplan);
 
 </script>
