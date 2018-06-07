@@ -37,6 +37,7 @@ www/custom_ui/floorplan/floorplan.css
 www/custom_ui/floorplan/lib/jquery-3.2.1.min.js
 www/custom_ui/floorplan/lib/moment.min.js
 www/custom_ui/floorplan/lib/svg-pan-zoom.min.js
+www/custom_ui/floorplan/lib/hammer.min.js
 ```
 
 Although a sample floorplan SVG file is included in this repo, you will want to create your own. See the [appendix](#creating-a-floorplan-svg-file) for more information.
