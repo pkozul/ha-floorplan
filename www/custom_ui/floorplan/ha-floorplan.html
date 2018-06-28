@@ -742,7 +742,7 @@
               break;
 
             default:
-              domain = action.domain
+              let domain = action.domain;
               let data = action.data ? action.data : {};
               if (action.data_template) {
                 let entities = this.instance.hass.states;
