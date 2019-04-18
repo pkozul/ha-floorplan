@@ -69,6 +69,25 @@
       var hideAppToolbar = ((this.panel.config.hide_app_toolbar === null) || (this.panel.config.hide_app_toolbar !== undefined));
       this.showAppToolbar = !hideAppToolbar;
       this.containerClass = this.showAppToolbar ? 'container-with-toolbar' : 'container-fullscreen';
+	  
+	  //hide sidebar
+      var hideAppSidebar = ((this.panel.config.kiosk_mode === null) || (this.panel.config.kiosk_mode !== undefined));
+      if(hideAppSidebar && hideAppToolbar) {
+        setTimeout(function() {
+          try {
+            var rootNode =document.querySelector('home-assistant').shadowRoot;
+            var mainNode =rootNode.querySelector('home-assistant-main').shadowRoot;
+            var floorplanNode =mainNode.querySelector('ha-panel-floorplan').shadowRoot;
+            var icon =floorplanNode.querySelector('paper-icon-button');
+			  
+            if(icon !=null) {
+              icon.click();
+            }
+          } catch(e) {
+            console.log(e);
+          }
+        }, 500);
+      }
     }
   }
 
