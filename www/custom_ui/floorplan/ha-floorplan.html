@@ -202,8 +202,8 @@
 
       this.loadStyleSheet(this.config.stylesheet + '?cacheBuster=' + (new Date().getTime()), function (success, link, sheet, cssRules) {
         if (success) {
-          this.instance.root.appendChild(link);
           let styleSheet = link[sheet];
+          this.instance.root.appendChild(link);
           setTimeout(() => {
             this.instance.cssRules = this.instance.getArray(styleSheet[cssRules]);
             callback();
