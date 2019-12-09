@@ -200,12 +200,12 @@
         callback();
       }
 
-      this.loadStyleSheet(this.config.stylesheet + '?cacheBuster=' + (new Date().getTime()), function (success, link) {
+      this.loadStyleSheet(this.config.stylesheet + '?cacheBuster=' + (new Date().getTime()), function (success, link, sheet, cssRules) {
         if (success) {
           this.instance.root.appendChild(link);
-          let styleSheet = link['sheet'];
+          let styleSheet = link[sheet];
           setTimeout(() => {
-            this.instance.cssRules = this.instance.getArray(styleSheet.cssRules);
+            this.instance.cssRules = this.instance.getArray(styleSheet[cssRules]);
             callback();
           }, 1000);
         }
@@ -909,7 +909,7 @@
           if (link[sheet] && link[sheet][cssRules].length) { // SUCCESS! our style sheet has loaded
             clearInterval(interval_id);                      // clear the counters
             clearTimeout(timeout_id);
-            fn.call(scope || window, true, link);           // fire the callback with success == true
+            fn.call(scope || window, true, link, sheet, cssRules);           // fire the callback with success == true
           }
         } catch (e) { } finally { }
       }, 10),                                                   // how often to check if the stylesheet is loaded
@@ -917,7 +917,7 @@
           clearInterval(interval_id);             // clear the counters
           clearTimeout(timeout_id);
           head.removeChild(link);                // since the style sheet didn't load, remove the link node from the DOM
-          fn.call(scope || window, false, link); // fire the callback with success == false
+          fn.call(scope || window, false, link, sheet, cssRules); // fire the callback with success == false
         }, 15000);                                 // how long to wait before failing
 
       head.appendChild(link);  // insert the link node into the DOM and start loading the style sheet
