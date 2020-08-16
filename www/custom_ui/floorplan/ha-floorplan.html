@@ -148,10 +148,10 @@
         return;
       }
 
-      invalidGroups = this.config.groups.filter(x => !x.entities && !x.elements);
+      invalidGroups = this.config.groups.filter(x => !x.entities && !x.elements && !x.groups);
       if (invalidGroups.length) {
         this.isLoading = false;
-        this.warn(`A group must contain either 'entities' or 'elements' in floorplan configuration`);
+        this.warn(`A group must contain either 'entities', 'elements' or 'groups' in floorplan configuration`);
         return;
       }
 
@@ -260,7 +260,7 @@
             }
           }
 
-          let entityGroups = this.instance.config.groups.filter(x => x.entities);
+          let entityGroups = this.instance.config.groups.filter(x => x.entities || x.groups);
           for (let entityGroup of entityGroups) {
             let targetEntityIds = [];
 
