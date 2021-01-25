@@ -1,3 +1,16 @@
+<table align="center">
+<tr>
+<td>
+<h1 align="center">
+⚠️ Please migrate to <a href="https://github.com/ExperienceLovelace/ha-floorplan"><b>ha-floorplan</b></a> ⚠️ 
+</h1>
+<p align="center">
+ha-floorplan has been replaced with <a href="https://github.com/ExperienceLovelace/ha-floorplan"><b>ha-floorplan</b></a>.<br><br>Please check out the new solution, and let us know what you think.<br><br>
+</p>
+</td>
+</tr>
+</table>
+
 # Floorplan for Home Assistant
 
 ![floorplan](https://user-images.githubusercontent.com/2073827/27056482-911f2e14-500b-11e7-90f0-44a344c39f85.png)
